@@ -41,7 +41,7 @@ public class AdapterParada extends BaseAdapter {
     }
 
     public void Init() {
-        InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbisi);
+        InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbici);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
 
@@ -63,7 +63,7 @@ public class AdapterParada extends BaseAdapter {
                 e.printStackTrace();
             }
         }
-        
+
         try {
             JSONObject jsonObject = new JSONObject(writer.toString());
             this.paradas = paradasFromJSON(jsonObject);
@@ -95,13 +95,13 @@ public class AdapterParada extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertVIew, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         ViewHolder holder = null;
 
         if (v == null) {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.listparadaview, null);
+            v = li.inflate(R.layout.parada_list_entry, null);
             holder = new ViewHolder();
             holder.number = (TextView) v.findViewById(R.id.paradaviewnumber);
             holder.address = (TextView) v.findViewById(R.id.paradaviewaddress);
