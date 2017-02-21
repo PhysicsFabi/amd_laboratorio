@@ -37,7 +37,7 @@ public class AdapterParada extends BaseAdapter {
         TextView partes;
     }
 
-    public void AdapterParadas (Context c) {
+    public AdapterParada(Context c) {
         context = c;
         Init();
     }
@@ -82,7 +82,7 @@ public class AdapterParada extends BaseAdapter {
         try {
             JSONArray paradasJSON = object.getJSONArray("features");
 
-            for(int i = 0; paradasJSON.size(); i++) {
+            for(int i = 0; i< paradasJSON.length(); i++) {
                 JSONObject paradaJSON = paradasJSON.getJSONObject(i).getJSONObject("properties");
                 result.add(new Parada(
                         paradaJSON.getString("name"),
@@ -131,8 +131,11 @@ public class AdapterParada extends BaseAdapter {
             holder = (ViewHolder) v.getTag();
         }
 
-        // Fill holder with the station info that is at 'position' in the ArrayList.
+        Parada parada = this.paradas.get(position);
+        holder.number.setText(Integer.toString(parada.number));
+        holder.address.setText(parada.address);
+        holder.partes.setText("0");
 
-        return null;
+        return v;
     }
 }
