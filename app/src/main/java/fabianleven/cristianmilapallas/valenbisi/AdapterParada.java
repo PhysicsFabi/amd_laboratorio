@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,8 +40,6 @@ public class AdapterParada extends BaseAdapter {
     }
 
     public void Init() {
-        paradas = new ArrayList<Parada>();
-
         InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbisi);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -62,9 +62,18 @@ public class AdapterParada extends BaseAdapter {
                 e.printStackTrace();
             }
         }
-
-        // parse writer.toString() in the paradas ArrayList using JSONArray and JSONObject
+        this.paradas = paradasFromJSON(jsonObjectFromString(writer.toString()));
     }
+
+    private JSONObject jsonObjectFromString(String string) {
+        return null;
+    }
+
+    private ArrayList<Parada> paradasFromJSON(JSONObject object) {
+        return null;
+    }
+
+
 
     @Override
     public int getCount() {
