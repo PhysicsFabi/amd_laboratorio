@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -62,12 +63,15 @@ public class AdapterParada extends BaseAdapter {
                 e.printStackTrace();
             }
         }
-        this.paradas = paradasFromJSON(jsonObjectFromString(writer.toString()));
+        
+        try {
+            JSONObject jsonObject = new JSONObject(writer.toString());
+            this.paradas = paradasFromJSON(jsonObject);
+        } catch (JSONException e) {
+            this.paradas = new ArrayList<Parada>();
+        }
     }
 
-    private JSONObject jsonObjectFromString(String string) {
-        return null;
-    }
 
     private ArrayList<Parada> paradasFromJSON(JSONObject object) {
         return null;
