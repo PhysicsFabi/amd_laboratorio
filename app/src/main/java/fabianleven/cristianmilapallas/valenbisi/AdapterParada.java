@@ -2,12 +2,14 @@ package fabianleven.cristianmilapallas.valenbisi;
 
 import android.app.Service;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -69,12 +71,30 @@ public class AdapterParada extends BaseAdapter {
             this.paradas = paradasFromJSON(jsonObject);
         } catch (JSONException e) {
             this.paradas = new ArrayList<Parada>();
+            Log.e("valenbisi", "Couldn' read from the file");
         }
     }
 
 
     private ArrayList<Parada> paradasFromJSON(JSONObject object) {
-        return null;
+        ArrayList<Parada> result = new ArrayList<Parada>();
+
+        try {
+            JSONArray paradasJSON = object.getJSONArray("features");
+
+            for(int i = 0; paradasJSON.size(); i++) {
+                JSONObject paradaJSON = paradasJSON.getJSONObject(i).getJSONObject("properties");
+                result.add(new Parada(
+                        paradaJSON.getString("name"),
+                        paradaJSON.getInt("number"),
+                        paradaJSON.getString("address")
+                ));
+            }
+        } catch (JSONException e) {
+            Log.e("valenbisi", "Couldn't parse from JSONArray");
+        }
+
+        return result;
     }
 
 
