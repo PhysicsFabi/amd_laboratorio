@@ -8,17 +8,48 @@
         android:text="Hola Cristian =)"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/paradaviewaddress" />
+        android:id="@+id/paradaviewaddress"
+        android:textStyle="normal|bold" />
 
-    <TextView
-        android:text="number"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/paradaviewnumber" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:text="partes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/paradaviewpartes" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="@string/number_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/number_label" />
+
+            <TextView
+                android:text="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/paradaviewnumber" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="@string/partes_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/partes_label" />
+
+            <TextView
+                android:text="partes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/paradaviewpartes" />
+
+        </TableRow>
+
+    </TableLayout>
+
 </LinearLayout>

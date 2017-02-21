@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 public class ListaParadas extends AppCompatActivity {
+
+    public static final String logTag = "Valenbisi";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

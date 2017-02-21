@@ -23,10 +23,6 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 
-/**
- * Created by Fabi on 21.02.2017.
- */
-
 public class AdapterParada extends BaseAdapter {
     private ArrayList<Parada> paradas;
     Context context;
@@ -46,58 +42,49 @@ public class AdapterParada extends BaseAdapter {
         InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbici);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
-
         try {
             Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             int n;
-
             while((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+           Log.e(ListaParadas.logTag, "Error while reading json file.", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(ListaParadas.logTag, "Error while reading json file.", e);
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(ListaParadas.logTag, "Error while reading json file.", e);
             }
         }
 
         try {
-            JSONObject jsonObject = new JSONObject(writer.toString());
-            this.paradas = paradasFromJSON(jsonObject);
+            initParadasFromJSON(new JSONObject(writer.toString()));
         } catch (JSONException e) {
-            this.paradas = new ArrayList<Parada>();
-            Log.e("valenbisi", "Couldn' read from the file");
+            Log.e(ListaParadas.logTag, "Error while reading json file.", e);
         }
     }
 
 
-    private ArrayList<Parada> paradasFromJSON(JSONObject object) {
-        ArrayList<Parada> result = new ArrayList<Parada>();
-
+    private void initParadasFromJSON(JSONObject object) {
+       this.paradas = new ArrayList<Parada>();
         try {
             JSONArray paradasJSON = object.getJSONArray("features");
 
             for(int i = 0; i< paradasJSON.length(); i++) {
                 JSONObject paradaJSON = paradasJSON.getJSONObject(i).getJSONObject("properties");
-                result.add(new Parada(
+                this.paradas.add(new Parada(
                         paradaJSON.getString("name"),
                         paradaJSON.getInt("number"),
                         paradaJSON.getString("address")
                 ));
             }
         } catch (JSONException e) {
-            Log.e("valenbisi", "Couldn't parse from JSONArray");
+            Log.e(ListaParadas.logTag, "Error while parsing json file.", e);
         }
-
-        return result;
     }
-
-
 
     @Override
     public int getCount() {
