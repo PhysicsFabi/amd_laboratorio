@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class DetalleParada extends AppCompatActivity {
-    private TextView idTV;
+    private TextView numeroTV;
     private TextView addressTV;
     private TextView totalSlotsTV;
     private TextView availableBikesTV;
@@ -18,14 +18,14 @@ public class DetalleParada extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_parada);
         Parada parada = (Parada) getIntent().getSerializableExtra(ListaParadas.STATION_KEY);
         setTitle(parada.name);
-        idTV = (TextView) findViewById(0);
+        numeroTV = (TextView) findViewById(0);
         addressTV = (TextView) findViewById(0);
         totalSlotsTV = (TextView) findViewById(0);
         availableBikesTV = (TextView) findViewById(0);
         freeSlotsTV = (TextView) findViewById(0);
         coordinatesTV = (TextView) findViewById(0);
 
-        idTV.setText(String.valueOf(parada.number));
+        numeroTV.setText(String.valueOf(parada.number));
         addressTV.setText(parada.address);
         totalSlotsTV.setText(String.valueOf(parada.totalSlots));
         availableBikesTV.setText(String.valueOf(parada.availableBikes));
