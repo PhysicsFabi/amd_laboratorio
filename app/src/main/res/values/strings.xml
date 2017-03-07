@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Valenbisi</string>
-    <string name="number_label">numero:</string>
-    <string name="partes_label">partes:</string>
+    <string name="number_label">Número:</string>
+    <string name="partes_label">Partes:</string>
 </resources>

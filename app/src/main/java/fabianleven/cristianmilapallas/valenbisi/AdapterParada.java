@@ -3,6 +3,7 @@ package fabianleven.cristianmilapallas.valenbisi;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,8 +122,11 @@ public class AdapterParada extends BaseAdapter {
 
         Parada parada = this.paradas.get(position);
         holder.number.setText(Integer.toString(parada.number));
+        holder.number.setTextColor(Color.BLACK);
         holder.address.setText(parada.address);
+        holder.address.setTextColor(Color.BLACK);
         holder.partes.setText("0");
+        holder.partes.setTextColor(Color.BLACK);
 
         return v;
     }

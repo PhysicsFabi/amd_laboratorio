@@ -23,7 +23,8 @@
                 android:text="@string/number_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/number_label" />
+                android:id="@+id/number_label"
+                android:textColor="#858484" />
 
             <TextView
                 android:text="number"
@@ -40,7 +41,8 @@
                 android:text="@string/partes_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/partes_label" />
+                android:id="@+id/partes_label"
+                android:textColor="#858484" />
 
             <TextView
                 android:text="partes"
