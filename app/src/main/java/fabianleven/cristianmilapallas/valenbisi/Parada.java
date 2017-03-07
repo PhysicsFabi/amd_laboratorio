@@ -22,18 +22,18 @@ public class Parada implements Serializable {
     public String name;
     public int number;
     public String address;
-    public int totalSlots;
-    public int freeSlots;
-    public int availableBikes;
+    public String totalSlots;
+    public String freeSlots;
+    public String availableBikes;
     public Coordinates coordinates;
 
     public Parada(
             String name,
             int number,
             String address,
-            int totalSlots,
-            int freeSlots,
-            int availableBikes,
+            String totalSlots,
+            String freeSlots,
+            String availableBikes,
             double latitude,
             double longitude) {
         this.name = name;

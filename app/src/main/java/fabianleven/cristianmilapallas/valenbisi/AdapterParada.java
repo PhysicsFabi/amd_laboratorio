@@ -76,7 +76,7 @@ public class AdapterParada extends BaseAdapter {
             JSONArray paradasJSON = object.getJSONArray("features");
 
             for(int i = 0; i< paradasJSON.length(); i++) {
-                JSONObject paradaJSON = paradasJSON.getJSONObject(i).getJSONObject("properties");
+                JSONObject paradaJSON = paradasJSON.getJSONObject(i);
                 JSONObject paradaJSONProps = paradaJSON.getJSONObject("properties");
                 JSONObject paradaJSONGeometry = paradaJSON.getJSONObject("geometry");
                 JSONArray paradaJSONCoordinates = paradaJSONGeometry.getJSONArray("coordinates");
@@ -84,9 +84,9 @@ public class AdapterParada extends BaseAdapter {
                         paradaJSONProps.getString("name"),
                         paradaJSONProps.getInt("number"),
                         paradaJSONProps.getString("address"),
-                        paradaJSONProps.getInt("total"),
-                        paradaJSONProps.getInt("free"),
-                        paradaJSONProps.getInt("available"),
+                        paradaJSONProps.getString("total"),
+                        paradaJSONProps.getString("free"),
+                        paradaJSONProps.getString("available"),
                         paradaJSONCoordinates.getDouble(0), //latitude
                         paradaJSONCoordinates.getDouble(1) // longitude
                 ));

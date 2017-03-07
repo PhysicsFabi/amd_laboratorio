@@ -18,12 +18,12 @@ public class DetalleParada extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_parada);
         Parada parada = (Parada) getIntent().getSerializableExtra(ListaParadas.STATION_KEY);
         setTitle(parada.name);
-        numeroTV = (TextView) findViewById(0);
-        addressTV = (TextView) findViewById(0);
-        totalSlotsTV = (TextView) findViewById(0);
-        availableBikesTV = (TextView) findViewById(0);
-        freeSlotsTV = (TextView) findViewById(0);
-        coordinatesTV = (TextView) findViewById(0);
+        numeroTV = (TextView) findViewById(R.id.detalle_number);
+        addressTV = (TextView) findViewById(R.id.detalle_address);
+        totalSlotsTV = (TextView) findViewById(R.id.detalle_total);
+        availableBikesTV = (TextView) findViewById(R.id.detalle_available);
+        freeSlotsTV = (TextView) findViewById(R.id.detalle_freeslots);
+        coordinatesTV = (TextView) findViewById(R.id.detalle_coordinates);
 
         numeroTV.setText(String.valueOf(parada.number));
         addressTV.setText(parada.address);
