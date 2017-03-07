@@ -2,4 +2,9 @@
     <string name="app_name">Valenbisi</string>
     <string name="number_label">Número:</string>
     <string name="partes_label">Partes:</string>
+    <string name="DetalleParada_address">Dirección:</string>
+    <string name="DetalleParada_total">Total:</string>
+    <string name="DetalleParada_available">Disponibles:</string>
+    <string name="DetalleParada_free">Libres:</string>
+    <string name="DetalleParada_coords">Coordenadas:</string>
 </resources>
