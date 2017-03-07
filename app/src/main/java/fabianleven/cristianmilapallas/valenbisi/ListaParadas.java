@@ -10,7 +10,7 @@ import android.widget.ListView;
 public class ListaParadas extends AppCompatActivity {
 
     public static final String logTag = "Valenbisi";
-    public static final String stationKey = "station";
+    public static final String STATION_KEY = "station";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class ListaParadas extends AppCompatActivity {
             Intent in = new Intent(getApplicationContext(), DetalleParada.class);
             Parada parada = (Parada) adapterParada.getItem(position);
             // parada is serializable
-            in.putExtra(stationKey, parada);
+            in.putExtra(STATION_KEY, parada);
             startActivity(in);
         }
     });

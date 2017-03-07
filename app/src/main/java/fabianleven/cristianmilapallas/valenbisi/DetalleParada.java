@@ -9,7 +9,6 @@ public class DetalleParada extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_parada);
-
-
+        Parada parada = (Parada) getIntent().getSerializableExtra(ListaParadas.STATION_KEY);
     }
 }
