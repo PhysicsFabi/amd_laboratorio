@@ -130,11 +130,8 @@ public class AdapterParada extends BaseAdapter {
 
         Parada parada = this.paradas.get(position);
         holder.number.setText(Integer.toString(parada.number));
-        holder.number.setTextColor(Color.BLACK);
         holder.address.setText(parada.address);
-        holder.address.setTextColor(Color.BLACK);
         holder.partes.setText("0");
-        holder.partes.setTextColor(Color.BLACK);
 
         return v;
     }

@@ -5,10 +5,11 @@
     android:id="@+id/lista_parada_view">
 
     <TextView
-        android:text="Hola Cristian =)"
+        android:id="@+id/paradaviewaddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/paradaviewaddress"
+        android:text="Hola Cristian =)"
+        android:textColor="@color/colorPrimaryDark"
         android:textStyle="normal|bold" />
 
     <TableLayout
@@ -20,17 +21,18 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="@string/number_label"
+                android:id="@+id/number_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/number_label"
-                android:textColor="#858484" />
+                android:text="@string/number_label"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:text="number"
+                android:id="@+id/paradaviewnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/paradaviewnumber" />
+                android:text="number"
+                android:textColor="@color/colorPrimary" />
         </TableRow>
 
         <TableRow
@@ -38,17 +40,18 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="@string/partes_label"
+                android:id="@+id/partes_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/partes_label"
-                android:textColor="#858484" />
+                android:text="@string/partes_label"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:text="partes"
+                android:id="@+id/paradaviewpartes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/paradaviewpartes" />
+                android:text="partes"
+                android:textColor="@color/colorPrimary" />
 
         </TableRow>
 

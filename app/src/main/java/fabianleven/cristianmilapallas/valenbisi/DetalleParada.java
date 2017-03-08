@@ -31,8 +31,8 @@ public class DetalleParada extends AppCompatActivity {
         availableBikesTV = (TextView) findViewById(R.id.detalle_available);
         freeSlotsTV = (TextView) findViewById(R.id.detalle_freeslots);
         coordinatesTV = (TextView) findViewById(R.id.detalle_coordinates);
-        openMapBt = (Button) findViewById(R.id.detalle_openmap);
-        addIncidentBt = (Button) findViewById(R.id.detalle_addincident);
+        openMapBt = (Button) findViewById(R.id.detalle_map);
+        addIncidentBt = (Button) findViewById(R.id.detalle_incident);
 
         numeroTV.setText(String.valueOf(parada.number));
         addressTV.setText(parada.address);
