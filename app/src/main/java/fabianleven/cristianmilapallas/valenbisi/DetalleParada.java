@@ -1,13 +1,20 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class DetalleParada extends AppCompatActivity {
     private TextView numeroTV;
@@ -16,8 +23,10 @@ public class DetalleParada extends AppCompatActivity {
     private TextView availableBikesTV;
     private TextView freeSlotsTV;
     private TextView coordinatesTV;
+    private ListView incidentsLV;
     private ImageButton openMapBt;
     private ImageButton addIncidentBt;
+
     private Parada parada;
 
     @Override
@@ -32,6 +41,7 @@ public class DetalleParada extends AppCompatActivity {
         availableBikesTV = (TextView) findViewById(R.id.detalle_available);
         freeSlotsTV = (TextView) findViewById(R.id.detalle_freeslots);
         coordinatesTV = (TextView) findViewById(R.id.detalle_coordinates);
+        incidentsLV = (ListView) findViewById(R.id.detalle_incidents);
         openMapBt = (ImageButton) findViewById(R.id.detalle_openmap);
         addIncidentBt = (ImageButton) findViewById(R.id.detalle_addincident);
 
@@ -45,6 +55,18 @@ public class DetalleParada extends AppCompatActivity {
         freeSlotsTV.setText(freeSlots_string);
         String coordinates_as_string = parada.coordinates.latitude + ", " + parada.coordinates.longitude;
         coordinatesTV.setText(coordinates_as_string);
+
+        ArrayList<String> dummyIncidents = new ArrayList<String>();
+        dummyIncidents.add("Incidencia 1");
+        dummyIncidents.add("Incidencia 2");
+        dummyIncidents.add("Incidencia 3");
+        dummyIncidents.add("Incidencia 4");
+        dummyIncidents.add("Incidencia 5");
+        dummyIncidents.add("Incidencia 6");
+        dummyIncidents.add("Incidencia 7");
+        dummyIncidents.add("Incidencia 8");
+        dummyIncidents.add("Incidencia 9");
+        incidentsLV.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, dummyIncidents));
 
 
         openMapBt.setOnClickListener(new View.OnClickListener() {

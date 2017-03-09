@@ -43,7 +43,7 @@ public class Parada implements Serializable {
      * a value of -1 indicates that there is no data available
      */
     public int availableBikes;
-    
+
     public Coordinates coordinates;
 
     public Parada(
