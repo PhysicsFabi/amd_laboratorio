@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class DetalleParada extends AppCompatActivity {
@@ -15,8 +16,8 @@ public class DetalleParada extends AppCompatActivity {
     private TextView availableBikesTV;
     private TextView freeSlotsTV;
     private TextView coordinatesTV;
-    private Button openMapBt;
-    private Button addIncidentBt;
+    private ImageButton openMapBt;
+    private ImageButton addIncidentBt;
     private Parada parada;
 
     @Override
@@ -31,8 +32,8 @@ public class DetalleParada extends AppCompatActivity {
         availableBikesTV = (TextView) findViewById(R.id.detalle_available);
         freeSlotsTV = (TextView) findViewById(R.id.detalle_freeslots);
         coordinatesTV = (TextView) findViewById(R.id.detalle_coordinates);
-        openMapBt = (Button) findViewById(R.id.detalle_map);
-        addIncidentBt = (Button) findViewById(R.id.detalle_incident);
+        openMapBt = (ImageButton) findViewById(R.id.detalle_openmap);
+        addIncidentBt = (ImageButton) findViewById(R.id.detalle_addincident);
 
         numeroTV.setText(String.valueOf(parada.number));
         addressTV.setText(parada.address);

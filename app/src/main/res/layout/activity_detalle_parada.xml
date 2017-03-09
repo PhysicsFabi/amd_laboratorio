@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_detalle_parada"
     android:layout_width="match_parent"
@@ -9,122 +10,157 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fabianleven.cristianmilapallas.valenbisi.DetalleParada">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <TextView
-            android:text="Datos"
+            android:id="@+id/detalle_datos_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textSize="30sp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:layout_alignParentTop="true"
+            android:text="Datos"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="30sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/detalle_scroll_datos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detalle_datos_heading">
 
         <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:columnCount="2"
-            android:rowCount="6"
-            >
+            android:rowCount="6">
 
             <TextView
-                android:text="@string/number_label"
+                android:layout_column="0"
                 android:layout_row="0"
-                android:layout_column="0"/>
+                android:text="@string/number_label"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/detalle_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="0"/>
+                android:layout_marginLeft="7dip"
+                android:layout_row="0"
+                android:text="placeholder" />
 
             <TextView
-                android:text="@string/DetalleParada_address"
+                android:layout_column="0"
                 android:layout_row="1"
-                android:layout_column="0"/>
+                android:text="@string/DetalleParada_address"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/detalle_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="1"/>
+                android:layout_marginLeft="7dip"
+                android:layout_row="1"
+                android:text="placeholder" />
 
             <TextView
-                android:text="@string/DetalleParada_total"
+                android:layout_column="0"
                 android:layout_row="2"
-                android:layout_column="0"/>
+                android:text="@string/DetalleParada_total"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/detalle_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="2"/>
+                android:layout_marginLeft="7dip"
+                android:layout_row="2"
+                android:text="placeholder" />
 
             <TextView
-                android:text="@string/DetalleParada_available"
+                android:layout_column="0"
                 android:layout_row="3"
-                android:layout_column="0"/>
+                android:text="@string/DetalleParada_available"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/detalle_available"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="3"/>
+                android:layout_marginLeft="7dip"
+                android:layout_row="3"
+                android:text="placeholder" />
 
             <TextView
-                android:text="@string/DetalleParada_free"
+                android:layout_column="0"
                 android:layout_row="4"
-                android:layout_column="0"/>
+                android:text="@string/DetalleParada_free"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/detalle_freeslots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="4"/>
+                android:layout_marginLeft="7dip"
+                android:layout_row="4"
+                android:text="placeholder" />
 
             <TextView
-                android:text="@string/DetalleParada_coords"
+                android:layout_column="0"
                 android:layout_row="5"
-                android:layout_column="0"/>
+                android:text="@string/DetalleParada_coords"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/detalle_coordinates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:layout_row="5"/>
+                android:layout_marginLeft="7dip"
+                android:layout_row="5"
+                android:text="placeholder" />
 
         </GridLayout>
+    </HorizontalScrollView>
 
-        <TextView
-            android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/detalle_incidencias_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detalle_scroll_datos"
+        android:text="Incidencias"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="30sp" />
+
+    <ListView
+        android:id="@+id/detalle_incidents"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/detalle_button_row"
+        android:layout_below="@+id/detalle_incidencias_heading" />
+
+    <LinearLayout
+        android:id="@+id/detalle_button_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/detalle_openmap"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Incidencias"
-            android:textSize="30sp"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:layout_weight="0.5"
+            app:srcCompat="@android:drawable/ic_dialog_map" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:id="@+id/detalle_incidents"
-            android:layout_height="260dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/detalle_map"
-                android:layout_weight="1" />
-
-            <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/detalle_incident"
-                android:layout_weight="1" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/detalle_addincident"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
     </LinearLayout>
 
