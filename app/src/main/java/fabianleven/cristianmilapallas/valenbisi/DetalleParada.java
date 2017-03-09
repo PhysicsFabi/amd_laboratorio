@@ -37,9 +37,12 @@ public class DetalleParada extends AppCompatActivity {
 
         numeroTV.setText(String.valueOf(parada.number));
         addressTV.setText(parada.address);
-        totalSlotsTV.setText(String.valueOf(parada.totalSlots));
-        availableBikesTV.setText(String.valueOf(parada.availableBikes));
-        freeSlotsTV.setText(String.valueOf(parada.freeSlots));
+        String totalSlots_string = parada.totalSlots == -1 ? getString(R.string.DetalleParada_no_hay_data) : String.valueOf(parada.totalSlots);
+        totalSlotsTV.setText(totalSlots_string);
+        String availableSlots_string = parada.availableBikes == -1 ? getString(R.string.DetalleParada_no_hay_data) : String.valueOf(parada.availableBikes);
+        availableBikesTV.setText(availableSlots_string);
+        String freeSlots_string = parada.freeSlots == -1 ? getString(R.string.DetalleParada_no_hay_data) : String.valueOf(parada.freeSlots);
+        freeSlotsTV.setText(freeSlots_string);
         String coordinates_as_string = parada.coordinates.latitude + ", " + parada.coordinates.longitude;
         coordinatesTV.setText(coordinates_as_string);
 

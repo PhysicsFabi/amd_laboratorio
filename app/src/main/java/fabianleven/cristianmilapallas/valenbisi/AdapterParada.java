@@ -84,9 +84,9 @@ public class AdapterParada extends BaseAdapter {
                         paradaJSONProps.getString("name"),
                         paradaJSONProps.getInt("number"),
                         paradaJSONProps.getString("address"),
-                        paradaJSONProps.getString("total"),
-                        paradaJSONProps.getString("free"),
-                        paradaJSONProps.getString("available"),
+                        paradaJSONProps.optInt("total", -1),
+                        paradaJSONProps.optInt("free", -1),
+                        paradaJSONProps.optInt("available", -1),
                         paradaJSONCoordinates.getDouble(0), //latitude
                         paradaJSONCoordinates.getDouble(1) // longitude
                 ));
