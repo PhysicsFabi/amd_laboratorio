@@ -13,6 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PartesDBHelper extends SQLiteOpenHelper {
 
+    private static final String DATABASE_NAME = "valenbisi";
+    private static int DATABASE_VERSION = 1;
+
     private static final String TABLE_NAME = "parte";
     private static final String COLUMN_NAME_PRIMARY_KEY = "id";
     private static final String COLUMN_NAME_NAME = "name";
@@ -21,8 +24,8 @@ public class PartesDBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME_STATUS = "status";
     private static final String COLUMN_NAME_TYPE = "type";
 
-    public PartesDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public PartesDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
