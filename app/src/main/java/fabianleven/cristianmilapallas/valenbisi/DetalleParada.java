@@ -88,5 +88,13 @@ public class DetalleParada extends AppCompatActivity {
                 }
             }
         });
+
+        addIncidentBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(), DetalleParte.class);
+                startActivity(in);
+            }
+        });
     }
 }
