@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="estado_parte">
+        <item>Abierto</item>
+        <item>Procesando</item>
+        <item>Cerrado</item>
+    </string-array>
+    <string-array name="tipo_parte">
+        <item>Mecánico</item>
+        <item>Eléctrico</item>
+        <item>Pintura</item>
+        <item>Albañilería</item>
+    </string-array>
+</resources>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -68,6 +69,13 @@ public class DetalleParada extends AppCompatActivity {
         dummyIncidents.add("Incidencia 9");
         incidentsLV.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, dummyIncidents));
 
+        incidentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent in = new Intent(getApplicationContext(), DetalleParte.class);
+                startActivity(in);
+            }
+        });
 
         openMapBt.setOnClickListener(new View.OnClickListener() {
             @Override
