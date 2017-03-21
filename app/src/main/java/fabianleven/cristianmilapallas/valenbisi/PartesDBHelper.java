@@ -63,6 +63,22 @@ public class PartesDBHelper extends SQLiteOpenHelper {
         return values;
     }
 
+    public static Parte parteFromCursor(Cursor c) {
+        final int COLUMN_ID_PRIMARY_KEY = c.getColumnIndex(COLUMN_NAME_PRIMARY_KEY);
+        final int COLUMN_ID_NAME = c.getColumnIndex(COLUMN_NAME_NAME);
+        final int COLUMN_ID_DESCRIPTION = c.getColumnIndex(COLUMN_NAME_DESCRIPTION);
+        final int COLUMN_ID_STATION_ID = c.getColumnIndex(COLUMN_NAME_STATION_ID);
+        final int COLUMN_ID_STATUS = c.getColumnIndex(COLUMN_NAME_STATUS);
+        final int COLUMN_ID_TYPE = c.getColumnIndex(COLUMN_NAME_TYPE);
+        return new Parte(
+                c.getString(COLUMN_ID_PRIMARY_KEY),
+                c.getString(COLUMN_ID_NAME),
+                c.getString(COLUMN_ID_DESCRIPTION),
+                c.getInt(COLUMN_ID_STATION_ID),
+                Parte.STATUS.values()[c.getInt(COLUMN_ID_STATUS)],
+                Parte.TYPE.values()[c.getInt(COLUMN_ID_TYPE)]);
+    }
+
     /**
      * Inserts a ticket in the database.
      *
@@ -117,19 +133,7 @@ public class PartesDBHelper extends SQLiteOpenHelper {
         if(!c.moveToFirst())
             return null;
         else {
-            final int COLUMN_ID_PRIMARY_KEY = c.getColumnIndex(COLUMN_NAME_PRIMARY_KEY);
-            final int COLUMN_ID_NAME = c.getColumnIndex(COLUMN_NAME_NAME);
-            final int COLUMN_ID_DESCRIPTION = c.getColumnIndex(COLUMN_NAME_DESCRIPTION);
-            final int COLUMN_ID_STATION_ID = c.getColumnIndex(COLUMN_NAME_STATION_ID);
-            final int COLUMN_ID_STATUS = c.getColumnIndex(COLUMN_NAME_STATUS);
-            final int COLUMN_ID_TYPE = c.getColumnIndex(COLUMN_NAME_TYPE);
-            return new Parte(
-                    c.getString(COLUMN_ID_PRIMARY_KEY),
-                    c.getString(COLUMN_ID_NAME),
-                    c.getString(COLUMN_ID_DESCRIPTION),
-                    c.getInt(COLUMN_ID_STATION_ID),
-                    Parte.STATUS.values()[c.getInt(COLUMN_ID_STATUS)],
-                    Parte.TYPE.values()[c.getInt(COLUMN_ID_TYPE)]);
+            return parteFromCursor(c);
         }
     }
 }

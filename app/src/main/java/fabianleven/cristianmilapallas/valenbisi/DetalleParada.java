@@ -1,6 +1,7 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class DetalleParada extends AppCompatActivity {
+    public final String KEY_PARTE_ID = "parteId";
+
     private TextView numeroTV;
     private TextView addressTV;
     private TextView totalSlotsTV;
@@ -59,13 +62,16 @@ public class DetalleParada extends AppCompatActivity {
 
 
         PartesDBHelper db = new PartesDBHelper(getApplicationContext());
-        AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
+        final AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
         incidentsLV.setAdapter(partesAdapter);
 
         incidentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = partesAdapter.getCursor();
+                cursor.moveToPosition(position);
                 Intent in = new Intent(getApplicationContext(), DetalleParte.class);
+                in.putExtra(KEY_PARTE_ID, PartesDBHelper.parteFromCursor(cursor).getId());
                 startActivity(in);
             }
         });

@@ -3,6 +3,7 @@ package fabianleven.cristianmilapallas.valenbisi;
 import android.app.Service;
 import android.content.Context;
 import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -25,41 +26,18 @@ public class AdapterParte extends CursorAdapter {
         super(context, c, 0);
     }
 
-    /* example para mirar
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        AdapterParada.ViewHolder holder = null;
-
-        if (v == null) {
-            LayoutInflater li = (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.parada_list_entry, null);
-            holder = new AdapterParada.ViewHolder();
-            holder.number = (TextView) v.findViewById(R.id.paradaviewnumber);
-            holder.address = (TextView) v.findViewById(R.id.paradaviewaddress);
-            holder.partes = (TextView) v.findViewById(R.id.paradaviewpartes);
-            v.setTag(holder);
-        } else {
-            holder = (AdapterParada.ViewHolder) v.getTag();
-        }
-
-        Parada parada = this.paradas.get(position);
-        holder.number.setText(Integer.toString(parada.number));
-        holder.address.setText(parada.address);
-        holder.partes.setText("0");
-
-        return v;
-    }
-    */
-
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return null;
+        return LayoutInflater.from(context).inflate(R.layout.parada_list_entry, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-
+        TextView nameTV = (TextView) view.findViewById(R.id.parte_list_name);
+        ImageView statusTV = (ImageView) view.findViewById(R.id.parte_list_status);
+        Parte parte = PartesDBHelper.parteFromCursor(cursor);
+        nameTV.setText(parte.getName());
+        //TODO set color according to status
     }
 
 }

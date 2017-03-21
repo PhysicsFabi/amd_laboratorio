@@ -6,13 +6,13 @@
     android:id="@+id/lista_parada_view">
 
     <ImageView
-        android:id="@+id/status"
+        android:id="@+id/parte_list_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/circle" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/parte_list_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
