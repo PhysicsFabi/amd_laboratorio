@@ -5,6 +5,7 @@ package fabianleven.cristianmilapallas.valenbisi;
  */
 
 public class Parte {
+
     public enum STATUS {
         OPEN(0),
         IN_PROGRESS(1),
