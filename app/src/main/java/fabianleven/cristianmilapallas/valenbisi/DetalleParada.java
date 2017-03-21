@@ -57,17 +57,10 @@ public class DetalleParada extends AppCompatActivity {
         String coordinates_as_string = parada.coordinates.latitude + ", " + parada.coordinates.longitude;
         coordinatesTV.setText(coordinates_as_string);
 
-        ArrayList<String> dummyIncidents = new ArrayList<String>();
-        dummyIncidents.add("Incidencia 1");
-        dummyIncidents.add("Incidencia 2");
-        dummyIncidents.add("Incidencia 3");
-        dummyIncidents.add("Incidencia 4");
-        dummyIncidents.add("Incidencia 5");
-        dummyIncidents.add("Incidencia 6");
-        dummyIncidents.add("Incidencia 7");
-        dummyIncidents.add("Incidencia 8");
-        dummyIncidents.add("Incidencia 9");
-        incidentsLV.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1, dummyIncidents));
+
+        PartesDBHelper db = new PartesDBHelper(getApplicationContext());
+        AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
+        incidentsLV.setAdapter(partesAdapter);
 
         incidentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
