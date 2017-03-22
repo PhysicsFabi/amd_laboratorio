@@ -10,6 +10,8 @@
     <string name="DetalleParada_coords">Coordenadas:</string>
     <string name="DetalleParada_no_hay_data">No hay data</string>
 
+    <string name="DetalleParte_title_new">Nueva Parte</string>
+    <string name="DetalleParte_title_update">Cambiar Parte</string>
     <string name="DetalleParte_subject">Asunto:</string>
     <string name="DetalleParte_description">Descripción:</string>
     <string name="DetalleParte_status">Estado:</string>

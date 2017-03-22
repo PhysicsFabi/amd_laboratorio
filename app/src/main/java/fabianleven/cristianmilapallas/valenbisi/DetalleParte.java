@@ -9,24 +9,29 @@ import android.widget.TextView;
 public class DetalleParte extends AppCompatActivity {
 
     private Parte parte;
-    private TextView name, description;
-    private Spinner status, type;
-    private FloatingActionButton delete, update;
+    private PartesDBHelper dbHelper;
+
+    private TextView nameTE, descriptionTE;
+    private Spinner statusSp, typeSp;
+    private FloatingActionButton deleteBt, updateBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_parte);
 
-        parte = getIntent().getExtras(DetalleParada.KEY_PARTE_ID);
+        updateBt = (FloatingActionButton) findViewById(R.id.detalle_parte_confirm);
 
-        if (parte != null) {
-            name = (TextView) findViewById(R.id.detalle_parte_);
-
+        String parteId = getIntent().getStringExtra(DetalleParada.KEY_PARTE_ID);
+        dbHelper = new PartesDBHelper(getApplicationContext());
+        if(parteId==null) {
+            setTitle(R.string.DetalleParte_title_new);
+            updateBt.setImageResource(android.R.drawable.ic_input_add);
+            // create new One
         } else {
-
+            setTitle(R.string.DetalleParte_title_update);
+            parte = dbHelper.parteById(parteId);
+            // update old
         }
-
-
     }
 }

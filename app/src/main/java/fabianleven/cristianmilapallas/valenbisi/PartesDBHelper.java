@@ -132,7 +132,7 @@ public class PartesDBHelper extends SQLiteOpenHelper {
      * @param parteId the ticket id
      * @return the ticket or null if the given ticket id does not exist
      */
-    public Parte parteById(int parteId) {
+    public Parte parteById(String parteId) {
         String selection = COLUMN_NAME_PRIMARY_KEY + "='" + parteId + "'";
         Cursor c = getReadableDatabase().query(TABLE_NAME, ALL_COLUMN_NAMES, selection, null, null, null, null);
         if(!c.moveToFirst())

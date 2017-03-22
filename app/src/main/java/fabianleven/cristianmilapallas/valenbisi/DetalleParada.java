@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class DetalleParada extends AppCompatActivity {
-    public final String KEY_PARTE_ID = "parteId";
+    public static final String KEY_PARTE_ID = "parteId";
 
     private TextView numeroTV;
     private TextView addressTV;
