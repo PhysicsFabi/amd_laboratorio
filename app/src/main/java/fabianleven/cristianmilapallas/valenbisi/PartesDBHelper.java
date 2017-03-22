@@ -17,12 +17,21 @@ public class PartesDBHelper extends SQLiteOpenHelper {
     private static int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "parte";
-    private static final String COLUMN_NAME_PRIMARY_KEY = "id";
+    // note: in order for the class CursorAdapter to work properly the column of the Primary Key has to be named "_id"
+    private static final String COLUMN_NAME_PRIMARY_KEY = "_id";
     private static final String COLUMN_NAME_NAME = "name";
     private static final String COLUMN_NAME_DESCRIPTION = "description";
     private static final String COLUMN_NAME_STATION_ID = "station_id";
     private static final String COLUMN_NAME_STATUS = "status";
     private static final String COLUMN_NAME_TYPE = "type";
+
+    private static final String[] ALL_COLUMN_NAMES = {
+            COLUMN_NAME_PRIMARY_KEY,
+            COLUMN_NAME_NAME,
+            COLUMN_NAME_DESCRIPTION,
+            COLUMN_NAME_STATION_ID,
+            COLUMN_NAME_STATUS,
+            COLUMN_NAME_TYPE};
 
     public PartesDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -86,8 +95,7 @@ public class PartesDBHelper extends SQLiteOpenHelper {
      * @return the ID of the newly inserted ticket, or -1 if an error occurred
      */
     public long insertParte(Parte parte) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.insertOrThrow(TABLE_NAME, null, contentValuesByParte(parte));
+        return getWritableDatabase().insertOrThrow(TABLE_NAME, null, contentValuesByParte(parte));
     }
 
     /**
@@ -97,9 +105,8 @@ public class PartesDBHelper extends SQLiteOpenHelper {
      * @return true - success, false - failure
      */
     public boolean updateParte(Parte parte) {
-        String filter = COLUMN_NAME_PRIMARY_KEY + "=" + parte.getId();
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.update(TABLE_NAME, contentValuesByParte(parte), filter, null) > 0;
+        String selection = COLUMN_NAME_PRIMARY_KEY + "='" + parte.getId() + "'";
+        return getWritableDatabase().update(TABLE_NAME, contentValuesByParte(parte), selection, null) > 0;
     }
 
     /**
@@ -110,26 +117,24 @@ public class PartesDBHelper extends SQLiteOpenHelper {
      */
     public boolean deleteParte(int parteId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String filter = COLUMN_NAME_PRIMARY_KEY + "=" + parteId;
-        return db.delete(TABLE_NAME, filter, null) > 0;
+        String selection = COLUMN_NAME_PRIMARY_KEY + "='" + parteId + "'";
+        return db.delete(TABLE_NAME, selection, null) > 0;
     }
 
     public Cursor partesByStation(Parada station) {
-        String filter = COLUMN_NAME_STATION_ID + "=" + station.number;
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        String selection = COLUMN_NAME_STATION_ID + "=" + station.number;
+        return getReadableDatabase().query(TABLE_NAME, ALL_COLUMN_NAMES, selection, null, null, null, null);
     }
 
     /**
      * Returns the ticket with the given id.
      *
      * @param parteId the ticket id
-     * @return the ticket or nullm if the given ticket id does not exist
+     * @return the ticket or null if the given ticket id does not exist
      */
     public Parte parteById(int parteId) {
-        String filter = COLUMN_NAME_PRIMARY_KEY + "=" + parteId;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        String selection = COLUMN_NAME_PRIMARY_KEY + "='" + parteId + "'";
+        Cursor c = getReadableDatabase().query(TABLE_NAME, ALL_COLUMN_NAMES, selection, null, null, null, null);
         if(!c.moveToFirst())
             return null;
         else {
