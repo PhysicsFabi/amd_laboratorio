@@ -7,106 +7,86 @@
     tools:context="fabianleven.cristianmilapallas.valenbisi.DetalleParte">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/detalle_parte_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="15dp"
-        android:text="Asunto"
+        android:text="@string/DetalleParte_subject"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/detalle_parte_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:layout_below="@+id/textView6"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_alignEnd="@+id/confirmar" />
+        android:layout_below="@+id/detalle_parte_name_label" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/detalle_parte_description_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText7"
-        android:layout_below="@+id/editText7"
-        android:text="Descripción"
+        android:layout_below="@+id/detalle_parte_name"
+        android:text="@string/DetalleParte_description"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/detalle_parte_description"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_alignStart="@+id/textView7"
-        android:layout_below="@+id/textView7"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:layout_alignEnd="@+id/editText7" />
+        android:layout_below="@+id/detalle_parte_description_label"
+        android:inputType="textMultiLine" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/detalle_parte_status_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText8"
-        android:layout_below="@+id/editText8"
-        android:text="Estado"
+        android:layout_below="@+id/detalle_parte_description"
+        android:text="@string/DetalleParte_status"
         android:textStyle="bold" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/detalle_parte_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editText8"
-        android:layout_alignStart="@+id/textView8"
-        android:layout_below="@+id/textView8"
+        android:layout_below="@+id/detalle_parte_status_label"
         android:entries="@array/estado_parte" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/detalle_parte_type_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner3"
-        android:text="Tipo"
-        android:textStyle="bold"
-        android:layout_alignStart="@+id/spinner4" />
+        android:layout_below="@+id/detalle_parte_status"
+        android:text="@string/DetalleParte_type" />
 
     <Spinner
-        android:id="@+id/spinner4"
+        android:id="@+id/detalle_parte_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView9"
-        android:layout_alignEnd="@+id/spinner3"
-        android:layout_alignStart="@+id/textView8"
-        android:entries="@array/tipo_parte"/>
+        android:layout_below="@+id/detalle_parte_type_label"
+        android:entries="@array/tipo_parte" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/confirmar"
+        android:id="@+id/detalle_parte_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="13dp"
-        android:background="@drawable/ic_done_white_24px"
-        android:clickable="true"
-        android:foreground="@drawable/ic_done_white_24px"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="mini"
-        app:srcCompat="?android:attr/textCheckMark" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/confirmar"
-        android:layout_alignStart="@+id/spinner4"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="16dp"
         android:clickable="true"
         app:backgroundTint="@android:color/holo_red_dark"
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_delete_white_24px" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/detalle_parte_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="mini"
+        app:srcCompat="?android:attr/textCheckMark" />
+
+
 
 </RelativeLayout>
