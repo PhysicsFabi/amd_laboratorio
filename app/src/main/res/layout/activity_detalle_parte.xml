@@ -19,26 +19,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/detalle_parte_name_label" />
 
-    <TextView
-        android:id="@+id/detalle_parte_description_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/detalle_parte_name"
-        android:text="@string/DetalleParte_description"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/detalle_parte_description"
+    <Spinner
+        android:id="@+id/detalle_parte_type"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@+id/detalle_parte_description_label"
-        android:inputType="textMultiLine" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detalle_parte_type_label"
+        android:entries="@array/tipo_parte" />
 
     <TextView
         android:id="@+id/detalle_parte_status_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/detalle_parte_description"
+        android:layout_below="@+id/detalle_parte_name"
         android:text="@string/DetalleParte_status"
         android:textStyle="bold" />
 
@@ -54,14 +46,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detalle_parte_status"
-        android:text="@string/DetalleParte_type" />
+        android:text="@string/DetalleParte_type"
+        android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/detalle_parte_type"
+    <TextView
+        android:id="@+id/detalle_parte_description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detalle_parte_type"
+        android:text="@string/DetalleParte_description"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/detalle_parte_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/detalle_parte_type_label"
-        android:entries="@array/tipo_parte" />
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/detalle_parte_description_label"
+        android:gravity="top|left"
+        android:scrollbars="vertical"
+        android:singleLine="false" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/detalle_parte_delete"
@@ -85,7 +89,7 @@
         android:clickable="true"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="mini"
-        app:srcCompat="?android:attr/textCheckMark" />
+        app:srcCompat="@drawable/ic_done_white_24px" />
 
 
 
