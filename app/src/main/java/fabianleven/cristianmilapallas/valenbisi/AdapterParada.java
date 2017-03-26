@@ -3,6 +3,7 @@ package fabianleven.cristianmilapallas.valenbisi;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -128,10 +129,12 @@ public class AdapterParada extends BaseAdapter {
             holder = (ViewHolder) v.getTag();
         }
 
+        PartesDBHelper db = new PartesDBHelper(v.getContext());
         Parada parada = this.paradas.get(position);
+        AdapterParte partesAdapter = new AdapterParte(v.getContext(), db.partesByStation(parada));
         holder.number.setText(Integer.toString(parada.number));
         holder.address.setText(parada.address);
-        holder.partes.setText("0");
+        holder.partes.setText(String.valueOf(partesAdapter.getCursor().getCount()));
 
         return v;
     }

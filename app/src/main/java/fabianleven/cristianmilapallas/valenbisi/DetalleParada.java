@@ -93,6 +93,8 @@ public class DetalleParada extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(getApplicationContext(), DetalleParte.class);
+                System.out.println("parada: " + parada.number);
+                in.putExtra("stationId", parada.number);
                 startActivity(in);
             }
         });
