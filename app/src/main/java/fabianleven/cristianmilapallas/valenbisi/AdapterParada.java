@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class AdapterParada extends BaseAdapter {
     private ArrayList<Parada> paradas;
     Context context;
+    PartesDBHelper partesDataBase;
 
     static class ViewHolder {
         TextView number;
@@ -38,6 +39,7 @@ public class AdapterParada extends BaseAdapter {
 
     public AdapterParada(Context c) {
         context = c;
+        partesDataBase = new PartesDBHelper(c);
         Init();
     }
 
@@ -129,12 +131,11 @@ public class AdapterParada extends BaseAdapter {
             holder = (ViewHolder) v.getTag();
         }
 
-        PartesDBHelper db = new PartesDBHelper(v.getContext());
+
         Parada parada = this.paradas.get(position);
-        AdapterParte partesAdapter = new AdapterParte(v.getContext(), db.partesByStation(parada));
         holder.number.setText(Integer.toString(parada.number));
         holder.address.setText(parada.address);
-        holder.partes.setText(String.valueOf(partesAdapter.getCursor().getCount()));
+        holder.partes.setText(String.valueOf(partesDataBase.partesByStation(parada).getCount()));
 
         return v;
     }
