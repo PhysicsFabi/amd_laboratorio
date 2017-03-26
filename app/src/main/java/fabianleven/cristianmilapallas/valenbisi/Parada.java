@@ -2,49 +2,45 @@ package fabianleven.cristianmilapallas.valenbisi;
 
 import java.io.Serializable;
 
-/**
- * Created by Fabi on 21.02.2017.
- */
-
 public class Parada implements Serializable {
     private static final long serialVersionUID = -2004949158290397639L;
 
     public class Coordinates implements Serializable {
         private static final long serialVersionUID = 3222357328377646295L;
-        public double longitude;
-        public double latitude;
+        public final double longitude;
+        public final double latitude;
 
         public Coordinates(double longitude, double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
     }
-    public String name;
-    public int number;
-    public String address;
+    public final String name;
+    public final int number;
+    public final String address;
 
     /**
      * amount of total bike slots
      *
      * a value of -1 indicates that there is no data available
      */
-    public int totalSlots;
+    public final int totalSlots;
 
     /**
      * amount of free bike slots
      *
      * a value of -1 indicates that there is no data available
      */
-    public int freeSlots;
+    public final int freeSlots;
 
     /**
      * amount of available bike slots
      *
      * a value of -1 indicates that there is no data available
      */
-    public int availableBikes;
+    public final int availableBikes;
 
-    public Coordinates coordinates;
+    public final Coordinates coordinates;
 
     public Parada(
             String name,

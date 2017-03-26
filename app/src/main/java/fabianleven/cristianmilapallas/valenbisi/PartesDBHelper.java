@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class PartesDBHelper extends SQLiteOpenHelper {
+class PartesDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "valenbisi";
-    private static int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "parte";
     // note: in order for the class CursorAdapter to work properly the column of the Primary Key has to be named "_id"

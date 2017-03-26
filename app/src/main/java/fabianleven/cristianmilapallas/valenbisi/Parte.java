@@ -1,16 +1,12 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
-/**
- * Created by Fabi on 21.03.2017.
- */
-
 public class Parte {
 
     public enum STATUS {
         OPEN(0),
         IN_PROGRESS(1),
         CLOSED(2);
-        private int val;
+        private final int val;
 
         STATUS(int val) {
             this.val = val;
@@ -27,7 +23,7 @@ public class Parte {
         PAINTING(2),
         CONSTRUCTION(3);
 
-        private int val;
+        private final int val;
 
         TYPE(int val) {
             this.val = val;

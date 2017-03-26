@@ -7,13 +7,8 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import java.util.EnumMap;
-
-/**
- * Created by Fabi on 26.03.2017.
- */
 
 public class StatusColorDotView extends android.support.v7.widget.AppCompatImageView {
 
@@ -26,7 +21,7 @@ public class StatusColorDotView extends android.support.v7.widget.AppCompatImage
     private static final EnumMap<Parte.STATUS, Integer> COLOR_MAP;
 
     static {
-        COLOR_MAP = new EnumMap<Parte.STATUS, Integer>(Parte.STATUS.class);
+        COLOR_MAP = new EnumMap<>(Parte.STATUS.class);
         COLOR_MAP.put(Parte.STATUS.CLOSED, Color.GREEN);
         COLOR_MAP.put(Parte.STATUS.IN_PROGRESS, Color.YELLOW);
         COLOR_MAP.put(Parte.STATUS.OPEN, Color.RED);
@@ -83,6 +78,7 @@ public class StatusColorDotView extends android.support.v7.widget.AppCompatImage
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int height= getMeasuredHeight();
+        //noinspection SuspiciousNameCombination
         setMeasuredDimension(height, height);
     }
 

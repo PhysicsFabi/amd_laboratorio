@@ -1,27 +1,15 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
-import android.app.Service;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.EnumMap;
 
-
-/**
- * Created by Fabi on 21.03.2017.
- */
-
-public class AdapterParte extends CursorAdapter {
+class AdapterParte extends CursorAdapter {
 
     public AdapterParte(Context context, Cursor c) {
         super(context, c, 0);

@@ -1,7 +1,12 @@
 <resources>
+    <string name="placeholder">placeholder</string>
+
     <string name="app_name">Valenbisi</string>
     <string name="number_label">Número:</string>
     <string name="partes_label">Partes:</string>
+
+    <string name="DetalleParada_data">Datos</string>
+    <string name="DetalleParada_incidents">Incidencias</string>
 
     <string name="DetalleParada_address">Dirección:</string>
     <string name="DetalleParada_total">Total:</string>
@@ -25,8 +30,8 @@
     <string name="DetalleParte_update_error_db">Error de base de datos. No se puede actualisar el parte.</string>
     <string name="DetalleParte_delete_success">Se ha borrado el parte.</string>
     <string name="DetalleParte_delete_error_db">Error de base de datos. No se puede borrar el parte.</string>
-
-
+    <string name="img_content_desc_add_incident">Nuevo Parte</string>
+    <string name="img_content_desc_open_map">Abrir mapa</string>
 
 
 </resources>

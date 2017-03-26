@@ -1,12 +1,8 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
-import android.app.Service;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -22,14 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 
-public class AdapterParada extends BaseAdapter {
+class AdapterParada extends BaseAdapter {
     private ArrayList<Parada> paradas;
-    Context context;
-    PartesDBHelper partesDataBase;
+    private final Context context;
+    private final PartesDBHelper partesDataBase;
 
     static class ViewHolder {
         TextView number;
@@ -43,7 +38,7 @@ public class AdapterParada extends BaseAdapter {
         Init();
     }
 
-    public void Init() {
+    private void Init() {
         InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbici);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -53,8 +48,6 @@ public class AdapterParada extends BaseAdapter {
             while((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);
             }
-        } catch (UnsupportedEncodingException e) {
-           Log.e(ListaParadas.logTag, "Error while reading json file.", e);
         } catch (IOException e) {
             Log.e(ListaParadas.logTag, "Error while reading json file.", e);
         } finally {
@@ -74,7 +67,7 @@ public class AdapterParada extends BaseAdapter {
 
 
     private void initParadasFromJSON(JSONObject object) {
-       this.paradas = new ArrayList<Parada>();
+       this.paradas = new ArrayList<>();
         try {
             JSONArray paradasJSON = object.getJSONArray("features");
 
@@ -114,14 +107,14 @@ public class AdapterParada extends BaseAdapter {
         return paradas.get(position).number;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
-        ViewHolder holder = null;
+        ViewHolder holder;
 
         if (v == null) {
-            LayoutInflater li = (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
-            v = li.inflate(R.layout.parada_list_entry, null);
+            v = View.inflate(context, R.layout.parada_list_entry, null);
             holder = new ViewHolder();
             holder.number = (TextView) v.findViewById(R.id.paradaviewnumber);
             holder.address = (TextView) v.findViewById(R.id.paradaviewaddress);

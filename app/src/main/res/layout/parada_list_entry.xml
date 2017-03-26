@@ -8,7 +8,7 @@
         android:id="@+id/paradaviewaddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hola Cristian =)"
+        android:text="@string/placeholder"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="normal|bold" />
 
@@ -31,7 +31,7 @@
                 android:id="@+id/paradaviewnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="number"
+                android:text="@string/placeholder"
                 android:textColor="@color/colorPrimary" />
         </TableRow>
 
@@ -50,7 +50,7 @@
                 android:id="@+id/paradaviewpartes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="partes"
+                android:text="@string/placeholder"
                 android:textColor="@color/colorPrimary" />
 
         </TableRow>

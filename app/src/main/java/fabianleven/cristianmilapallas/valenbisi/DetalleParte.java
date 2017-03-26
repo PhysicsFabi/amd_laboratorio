@@ -34,8 +34,8 @@ public class DetalleParte extends AppCompatActivity {
         deleteBt = (FloatingActionButton) findViewById(R.id.detalle_parte_delete);
         updateBt = (FloatingActionButton) findViewById(R.id.detalle_parte_confirm);
 
-        statusSp.setAdapter(new ArrayAdapter<Parte.STATUS>(this, android.R.layout.simple_spinner_item, Parte.STATUS.values()));
-        typeSp.setAdapter(new ArrayAdapter<Parte.TYPE>(this, android.R.layout.simple_spinner_item, Parte.TYPE.values()));
+        statusSp.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Parte.STATUS.values()));
+        typeSp.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Parte.TYPE.values()));
 
 
         if(parteId==null) {
