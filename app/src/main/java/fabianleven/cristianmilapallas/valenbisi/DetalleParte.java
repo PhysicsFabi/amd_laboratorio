@@ -50,7 +50,7 @@ public class DetalleParte extends AppCompatActivity {
                                         stationid,
                                         (Parte.STATUS) statusSp.getSelectedItem(), (Parte.TYPE) typeSp.getSelectedItem());
 
-                    dbHelper.insertParte(parte);
+                    System.err.println(dbHelper.insertParte(parte));
                     finish();
                 }
             });
@@ -65,6 +65,28 @@ public class DetalleParte extends AppCompatActivity {
             setTitle(R.string.DetalleParte_title_update);
             parte = dbHelper.parteById(parteId);
             // update old
+            nameTE.setText(parte.getName());
+            descriptionTE.setText(parte.getDescription());
+            statusSp.setSelection(parte.getStatus().ordinal());
+            typeSp.setSelection(parte.getType().ordinal());
+
+            updateBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dbHelper.updateParte(parte);
+
+                    finish();
+                }
+            });
+
+            deleteBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dbHelper.deleteParte(Integer.parseInt(parte.getId()));
+
+                    finish();
+                }
+            });
         }
     }
 }

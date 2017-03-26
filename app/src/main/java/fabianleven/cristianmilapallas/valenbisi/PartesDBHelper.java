@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -95,7 +96,14 @@ public class PartesDBHelper extends SQLiteOpenHelper {
      * @return the ID of the newly inserted ticket, or -1 if an error occurred
      */
     public long insertParte(Parte parte) {
-        return getWritableDatabase().insertOrThrow(TABLE_NAME, null, contentValuesByParte(parte));
+        long returnedValue = 0;
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        db.insert(TABLE_NAME, null, contentValuesByParte(parte));
+        db.endTransaction();
+        System.err.println(returnedValue);
+
+        return returnedValue;
     }
 
     /**
