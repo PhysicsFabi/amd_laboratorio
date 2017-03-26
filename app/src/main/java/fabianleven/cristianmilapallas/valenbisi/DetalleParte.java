@@ -9,8 +9,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class DetalleParte extends AppCompatActivity {
 
     private Parte parte;
@@ -71,7 +69,7 @@ public class DetalleParte extends AppCompatActivity {
 
     private void setUpLayoutForUpdateParte() {
         setTitle(R.string.DetalleParte_title_update);
-        fielFieldsFromParte();
+        fillFieldsFromParte();
         updateBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +145,7 @@ public class DetalleParte extends AppCompatActivity {
         }
     }
 
-    private void fielFieldsFromParte() {
+    private void fillFieldsFromParte() {
         nameTE.setText(parte.getName());
         descriptionTE.setText(parte.getDescription());
         statusSp.setSelection(parte.getStatus().getVal());
