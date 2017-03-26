@@ -34,8 +34,8 @@ public class DetalleParte extends AppCompatActivity {
         deleteBt = (FloatingActionButton) findViewById(R.id.detalle_parte_delete);
         updateBt = (FloatingActionButton) findViewById(R.id.detalle_parte_confirm);
 
-        statusSp.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Parte.STATUS.values()));
-        typeSp.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Parte.TYPE.values()));
+        setUpStatusSpinner();
+        setUpTypeSpinner();
 
 
         if(parteId==null) {
@@ -50,9 +50,26 @@ public class DetalleParte extends AppCompatActivity {
         }
     }
 
+    private void setUpTypeSpinner() {
+        String[] type_strings = new String[Parte.TYPE.values().length];
+        type_strings[Parte.TYPE.MECHANICAL.getVal()] = getString(R.string.DetalleParte_type_mecanical);
+        type_strings[Parte.TYPE.ELECTRICAL.getVal()] = getString(R.string.DetalleParte_type_electrical);
+        type_strings[Parte.TYPE.PAINTING.getVal()] = getString(R.string.DetalleParte_type_painting);
+        type_strings[Parte.TYPE.CONSTRUCTION.getVal()] = getString(R.string.DetalleParte_type_construction);
+        typeSp.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, type_strings));
+    }
+
+    private void setUpStatusSpinner() {
+        String[] status_strings = new String[Parte.STATUS.values().length];
+        status_strings[Parte.STATUS.OPEN.getVal()] = getString(R.string.DetalleParte_status_open);
+        status_strings[Parte.STATUS.IN_PROGRESS.getVal()] = getString(R.string.DetalleParte_status_in_progress);
+        status_strings[Parte.STATUS.CLOSED.getVal()] = getString(R.string.DetalleParte_status_closed);
+        statusSp.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, status_strings));
+    }
+
     private void setUpLayoutForUpdateParte() {
         setTitle(R.string.DetalleParte_title_update);
-        fielFieldsFromParte();
+        fillFieldsFromParte();
         updateBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,11 +145,11 @@ public class DetalleParte extends AppCompatActivity {
         }
     }
 
-    private void fielFieldsFromParte() {
+    private void fillFieldsFromParte() {
         nameTE.setText(parte.getName());
         descriptionTE.setText(parte.getDescription());
-        statusSp.setSelection(parte.getStatus().ordinal());
-        typeSp.setSelection(parte.getType().ordinal());
+        statusSp.setSelection(parte.getStatus().getVal());
+        typeSp.setSelection(parte.getType().getVal());
     }
 
     private enum FILL_PARTE_RESULT {
@@ -147,8 +164,8 @@ public class DetalleParte extends AppCompatActivity {
         }
         parte.setName(name);
         parte.setDescription(descriptionTE.getText().toString());
-        parte.setStatus((Parte.STATUS) statusSp.getSelectedItem());
-        parte.setType((Parte.TYPE) typeSp.getSelectedItem());
+        parte.setStatus(Parte.STATUS.values()[statusSp.getSelectedItemPosition()]);
+        parte.setType(Parte.TYPE.values()[typeSp.getSelectedItemPosition()]);
         return FILL_PARTE_RESULT.SUCCESS;
     }
 }
