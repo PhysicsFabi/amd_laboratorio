@@ -25,6 +25,7 @@ public class DetalleParada extends AppCompatActivity {
     private ImageButton openMapBt;
     private ImageButton addIncidentBt;
     private PartesDBHelper db;
+    private AdapterParte partesAdapter;
 
     private Parada parada;
 
@@ -39,7 +40,7 @@ public class DetalleParada extends AppCompatActivity {
         setFields();
 
         db = new PartesDBHelper(getApplicationContext());
-        final AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
+        partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
         incidentsLV.setAdapter(partesAdapter);
 
         incidentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,8 +80,7 @@ public class DetalleParada extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
-        incidentsLV.setAdapter(partesAdapter);
+        partesAdapter.notifyDataSetChanged();
     }
 
     private void findAllViews() {
