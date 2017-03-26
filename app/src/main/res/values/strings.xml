@@ -17,4 +17,16 @@
     <string name="DetalleParte_status">Estado:</string>
     <string name="DetalleParte_type">Tipo:</string>
 
+    <string name="DetalleParte_creation_success">Se ha creido el nuevo parte.</string>
+    <string name="DetalleParte_creation_error_empty_name">Nombre no puede ser vacío.</string>
+    <string name="DetalleParte_creation_error_db">Error de base de datos. No se puede cree el parte.</string>
+    <string name="DetalleParte_creation_deleted">Cancelado</string>
+    <string name="DetalleParte_update_success">Se ha actualisado el parte.</string>
+    <string name="DetalleParte_update_error_db">Error de base de datos. No se puede actualisar el parte.</string>
+    <string name="DetalleParte_delete_success">Se ha borrado el parte.</string>
+    <string name="DetalleParte_delete_error_db">Error de base de datos. No se puede borrar el parte.</string>
+
+
+
+
 </resources>

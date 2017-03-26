@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class DetalleParada extends AppCompatActivity {
     public static final String KEY_PARTE_ID = "parteId";
+    public static final String KEY_STATION_ID = "stationId";
 
     private TextView numeroTV;
     private TextView addressTV;
@@ -93,7 +94,7 @@ public class DetalleParada extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(getApplicationContext(), DetalleParte.class);
-                in.putExtra("stationId", parada.number);
+                in.putExtra(KEY_STATION_ID, parada.number);
                 startActivity(in);
             }
         });

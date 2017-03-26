@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetalleParte extends AppCompatActivity {
 
     private Parte parte;
+    private int stationId;
     private PartesDBHelper dbHelper;
 
     private TextView nameTE, descriptionTE;
@@ -37,56 +39,116 @@ public class DetalleParte extends AppCompatActivity {
 
 
         if(parteId==null) {
-            setTitle(R.string.DetalleParte_title_new);
-            updateBt.setImageResource(android.R.drawable.ic_input_add);
-            // create new One
-            updateBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Parte.STATUS status = (Parte.STATUS) statusSp.getSelectedItem();
-                    int stationid = getIntent().getIntExtra("stationId", 0);
-                    System.out.println("station id click: " + stationid);
-                    parte = new Parte("", nameTE.getText().toString(), descriptionTE.getText().toString(),
-                                        stationid,
-                                        (Parte.STATUS) statusSp.getSelectedItem(), (Parte.TYPE) typeSp.getSelectedItem());
-
-                    System.err.println(dbHelper.insertParte(parte));
-                    finish();
-                }
-            });
-
-            deleteBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            parte = new Parte();
+            stationId = getIntent().getIntExtra(DetalleParada.KEY_STATION_ID, 0);
+            parte.setStationId(stationId);
+            setUpLayoutForNewParte();
         } else {
-            setTitle(R.string.DetalleParte_title_update);
             parte = dbHelper.parteById(parteId);
-            // update old
-            nameTE.setText(parte.getName());
-            descriptionTE.setText(parte.getDescription());
-            statusSp.setSelection(parte.getStatus().ordinal());
-            typeSp.setSelection(parte.getType().ordinal());
-
-            updateBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dbHelper.updateParte(parte);
-
-                    finish();
-                }
-            });
-
-            deleteBt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dbHelper.deleteParte(Integer.parseInt(parte.getId()));
-
-                    finish();
-                }
-            });
+            stationId = parte.getStationId();
+            setUpLayoutForUpdateParte();
         }
+    }
+
+    private void setUpLayoutForUpdateParte() {
+        setTitle(R.string.DetalleParte_title_update);
+        fielFieldsFromParte();
+        updateBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateParte();
+            }
+        });
+
+        deleteBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteParte();
+            }
+        });
+    }
+
+    private void setUpLayoutForNewParte() {
+        setTitle(R.string.DetalleParte_title_new);
+        updateBt.setImageResource(android.R.drawable.ic_input_add);
+        updateBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewParte();
+            }
+        });
+
+        deleteBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_deleted, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+    }
+
+    private void createNewParte() {
+        parte.setStationId(stationId);
+        switch (fillParteFromFields()) {
+            case ERROR_NAME_EMPTY:
+                Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_error_empty_name, Toast.LENGTH_SHORT).show();
+                return;
+            case SUCCESS:
+                long insertion_result = dbHelper.insertParte(parte);
+                if(insertion_result<=-1) {
+                    Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_error_db, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_success, Toast.LENGTH_SHORT).show();
+                finish();
+        }
+    }
+
+    private void deleteParte() {
+        if(!dbHelper.deleteParte(Integer.parseInt(parte.getId()))) {
+            Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_delete_error_db, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_delete_success, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private void updateParte() {
+        switch (fillParteFromFields()) {
+            case ERROR_NAME_EMPTY:
+                Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_error_empty_name, Toast.LENGTH_SHORT).show();
+                return;
+            case SUCCESS:
+                if(!dbHelper.updateParte(parte)) {
+                    Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_update_error_db, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_update_success, Toast.LENGTH_SHORT).show();
+                finish();
+        }
+    }
+
+    private void fielFieldsFromParte() {
+        nameTE.setText(parte.getName());
+        descriptionTE.setText(parte.getDescription());
+        statusSp.setSelection(parte.getStatus().ordinal());
+        typeSp.setSelection(parte.getType().ordinal());
+    }
+
+    private enum FILL_PARTE_RESULT {
+        SUCCESS,
+        ERROR_NAME_EMPTY
+    }
+
+    private FILL_PARTE_RESULT fillParteFromFields() {
+        String name = nameTE.getText().toString();
+        if(name.trim().isEmpty()) {
+            return FILL_PARTE_RESULT.ERROR_NAME_EMPTY;
+        }
+        parte.setName(name);
+        parte.setDescription(descriptionTE.getText().toString());
+        parte.setStatus((Parte.STATUS) statusSp.getSelectedItem());
+        parte.setType((Parte.TYPE) typeSp.getSelectedItem());
+        return FILL_PARTE_RESULT.SUCCESS;
     }
 }

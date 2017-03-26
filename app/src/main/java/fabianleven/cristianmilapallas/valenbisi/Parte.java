@@ -46,15 +46,8 @@ public class Parte {
     private STATUS status;
     private TYPE type;
 
-    public Parte() {}
-
-    public Parte(String id, String name, String description, int stationId, STATUS status, TYPE type) {
+    public void setId(String id) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.stationId = stationId;
-        this.status = status;
-        this.type = type;
     }
 
     public String getId() {

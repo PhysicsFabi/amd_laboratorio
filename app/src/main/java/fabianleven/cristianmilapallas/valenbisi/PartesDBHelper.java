@@ -3,14 +3,8 @@ package fabianleven.cristianmilapallas.valenbisi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-/**
- * Created by Fabi on 21.03.2017.
- */
 
 public class PartesDBHelper extends SQLiteOpenHelper {
 
@@ -60,7 +54,7 @@ public class PartesDBHelper extends SQLiteOpenHelper {
     /**
      * Creates key-value-pairs for a ticket. The pirmary key column is NOT included.
      *
-     * @param parte
+     * @param parte the ticket from which the values are taken
      * @return column name - column content pairs for a ticket
      */
     private ContentValues contentValuesByParte(Parte parte) {
@@ -80,13 +74,14 @@ public class PartesDBHelper extends SQLiteOpenHelper {
         final int COLUMN_ID_STATION_ID = c.getColumnIndex(COLUMN_NAME_STATION_ID);
         final int COLUMN_ID_STATUS = c.getColumnIndex(COLUMN_NAME_STATUS);
         final int COLUMN_ID_TYPE = c.getColumnIndex(COLUMN_NAME_TYPE);
-        return new Parte(
-                c.getString(COLUMN_ID_PRIMARY_KEY),
-                c.getString(COLUMN_ID_NAME),
-                c.getString(COLUMN_ID_DESCRIPTION),
-                c.getInt(COLUMN_ID_STATION_ID),
-                Parte.STATUS.values()[c.getInt(COLUMN_ID_STATUS)],
-                Parte.TYPE.values()[c.getInt(COLUMN_ID_TYPE)]);
+        Parte parte = new Parte();
+        parte.setId(c.getString(COLUMN_ID_PRIMARY_KEY));
+        parte.setName(c.getString(COLUMN_ID_NAME));
+        parte.setDescription(c.getString(COLUMN_ID_DESCRIPTION));
+        parte.setStationId(c.getInt(COLUMN_ID_STATION_ID));
+        parte.setStatus(Parte.STATUS.values()[c.getInt(COLUMN_ID_STATUS)]);
+        parte.setType(Parte.TYPE.values()[c.getInt(COLUMN_ID_TYPE)]);
+        return parte;
     }
 
     /**
@@ -96,14 +91,9 @@ public class PartesDBHelper extends SQLiteOpenHelper {
      * @return the ID of the newly inserted ticket, or -1 if an error occurred
      */
     public long insertParte(Parte parte) {
-        long returnedValue = 0;
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        db.insert(TABLE_NAME, null, contentValuesByParte(parte));
-        db.endTransaction();
-        System.err.println(returnedValue);
-
-        return returnedValue;
+        long primary_key = getWritableDatabase().insert(TABLE_NAME, null, contentValuesByParte(parte));
+        parte.setId(String.valueOf(primary_key));
+        return primary_key;
     }
 
     /**
