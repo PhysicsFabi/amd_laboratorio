@@ -24,6 +24,7 @@ public class DetalleParada extends AppCompatActivity {
     private ListView incidentsLV;
     private ImageButton openMapBt;
     private ImageButton addIncidentBt;
+    private PartesDBHelper db;
 
     private Parada parada;
 
@@ -37,7 +38,7 @@ public class DetalleParada extends AppCompatActivity {
 
         setFields();
 
-        PartesDBHelper db = new PartesDBHelper(getApplicationContext());
+        db = new PartesDBHelper(getApplicationContext());
         final AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
         incidentsLV.setAdapter(partesAdapter);
 
@@ -75,6 +76,13 @@ public class DetalleParada extends AppCompatActivity {
         });
     }
 
+    protected void onResume() {
+        super.onResume();
+
+        AdapterParte partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
+        incidentsLV.setAdapter(partesAdapter);
+    }
+
     private void findAllViews() {
         numeroTV = (TextView) findViewById(R.id.detalle_number);
         addressTV = (TextView) findViewById(R.id.detalle_address);
@@ -99,4 +107,6 @@ public class DetalleParada extends AppCompatActivity {
         String coordinates_as_string = parada.coordinates.latitude + ", " + parada.coordinates.longitude;
         coordinatesTV.setText(coordinates_as_string);
     }
+
+
 }
