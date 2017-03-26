@@ -24,7 +24,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fabianleven.cristianmilapallas.valenbisi.ListaParadas" />
         </activity>
-        <activity android:name=".DetalleParte"></activity>
+        <activity
+            android:name=".DetalleParte"
+            android:parentActivityName=".DetalleParada">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fabianleven.cristianmilapallas.valenbisi.DetalleParada" />
+        </activity>
     </application>
 
 </manifest>
