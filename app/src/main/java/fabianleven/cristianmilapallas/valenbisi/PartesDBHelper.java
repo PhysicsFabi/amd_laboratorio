@@ -21,7 +21,7 @@ class PartesDBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME_TYPE = "type";
 
     private static final String[] ALL_COLUMN_NAMES = {
-            "rowid " + COLUMN_NAME_PRIMARY_KEY,
+            COLUMN_NAME_PRIMARY_KEY,
             COLUMN_NAME_NAME,
             COLUMN_NAME_DESCRIPTION,
             COLUMN_NAME_STATION_ID,
