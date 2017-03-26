@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StatusColorDotView">
+        <attr name="status" format="enum">
+            <enum name="open" value="0"/>
+            <enum name="in_progress" value="1"/>
+            <enum name="closed" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

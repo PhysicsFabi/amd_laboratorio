@@ -3,6 +3,9 @@ package fabianleven.cristianmilapallas.valenbisi;
 import android.app.Service;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.EnumMap;
 
 
 /**
@@ -30,8 +35,9 @@ public class AdapterParte extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView nameTV = (TextView) view.findViewById(R.id.parte_list_name);
-        ImageView statusTV = (ImageView) view.findViewById(R.id.parte_list_status);
+        StatusColorDotView statusSCDV = (StatusColorDotView) view.findViewById(R.id.parte_list_status);
         Parte parte = PartesDBHelper.parteFromCursor(cursor);
         nameTV.setText(parte.getName());
+        statusSCDV.setStatus(parte.getStatus());
     }
 }
