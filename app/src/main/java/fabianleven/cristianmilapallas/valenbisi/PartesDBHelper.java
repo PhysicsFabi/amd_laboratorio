@@ -52,7 +52,7 @@ class PartesDBHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Creates key-value-pairs for a ticket. The pirmary key column is NOT included.
+     * Creates key-value-pairs for a ticket. The primary key column is NOT included.
      *
      * @param parte the ticket from which the values are taken
      * @return column name - column content pairs for a ticket
@@ -99,7 +99,7 @@ class PartesDBHelper extends SQLiteOpenHelper {
     /**
      * Updates a ticket in the database.
      *
-     * @param parte the ticket t be updated
+     * @param parte the ticket to be updated
      * @return true - success, false - failure
      */
     public boolean updateParte(Parte parte) {

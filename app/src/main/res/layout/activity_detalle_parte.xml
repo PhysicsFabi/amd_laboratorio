@@ -62,9 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/detalle_parte_description_label"
-        android:labelFor="@id/detalle_parte_description"
         android:gravity="top|start"
-        android:inputType="text"
+        android:inputType="text|textMultiLine"
+        android:labelFor="@id/detalle_parte_description"
         android:scrollbars="vertical" />
 
     <android.support.design.widget.FloatingActionButton

@@ -23,7 +23,7 @@
     <string name="DetalleParte_type">Tipo:</string>
 
     <string name="DetalleParte_creation_success">Se ha creado un nuevo parte</string>
-    <string name="DetalleParte_creation_error_empty_name">El nombre no puede ser nulo.</string>
+    <string name="DetalleParte_creation_error_empty_name">El asunto no puede ser nulo.</string>
     <string name="DetalleParte_creation_error_db">Error en la base de datos: no se puede crear el parte.</string>
     <string name="DetalleParte_creation_deleted">Cancelado</string>
     <string name="DetalleParte_update_success">Se ha actualizado el parte.</string>
@@ -31,6 +31,7 @@
     <string name="DetalleParte_delete_success">Se ha borrado el parte.</string>
     <string name="DetalleParte_delete_error_db">Error en la base de datos. No se puede eliminar el parte.</string>
     <string name="img_content_desc_add_incident">Nuevo parte</string>
+    <string name="img_content_desc_open_map">Abrir mapa</string>
     <string name="DetalleParte_status_open">Abierto</string>
     <string name="DetalleParte_status_in_progress">Procesando</string>
     <string name="DetalleParte_status_closed">Cerrado</string>
@@ -38,7 +39,7 @@
     <string name="DetalleParte_type_electrical">Eléctrico</string>
     <string name="DetalleParte_type_painting">Pintura</string>
     <string name="DetalleParte_type_construction">Albañilería</string>
-    <string name="img_content_desc_open_map">Abrir mapa</string>
+
 
 
 </resources>

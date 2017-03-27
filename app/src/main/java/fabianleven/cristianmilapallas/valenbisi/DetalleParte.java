@@ -12,7 +12,6 @@ import android.widget.Toast;
 public class DetalleParte extends AppCompatActivity {
 
     private Parte parte;
-    private int stationId;
     private PartesDBHelper dbHelper;
 
     private TextView nameTE, descriptionTE;
@@ -24,30 +23,36 @@ public class DetalleParte extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_parte);
 
-        String parteId = getIntent().getStringExtra(DetalleParada.KEY_PARTE_ID);
-        dbHelper = new PartesDBHelper(getApplicationContext());
+        findAllViews();
+        setUpStatusSpinner();
+        setUpTypeSpinner();
 
+        dbHelper = new PartesDBHelper(getApplicationContext());
+        String parteId = getIntent().getStringExtra(DetalleParada.KEY_PARTE_ID);
+        if(parteId==null) {
+            parte = new Parte();
+            int stationId = getIntent().getIntExtra(DetalleParada.KEY_STATION_ID, 0);
+            parte.setStationId(stationId);
+            setUpLayoutForNewParte();
+        } else {
+            parte = dbHelper.parteById(parteId);
+            setUpLayoutForUpdateParte();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_deleted, Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
+    private void findAllViews() {
         nameTE = (TextView) findViewById(R.id.detalle_parte_name);
         descriptionTE = (TextView) findViewById(R.id.detalle_parte_description);
         statusSp = (Spinner) findViewById(R.id.detalle_parte_status);
         typeSp = (Spinner) findViewById(R.id.detalle_parte_type);
         deleteBt = (FloatingActionButton) findViewById(R.id.detalle_parte_delete);
         updateBt = (FloatingActionButton) findViewById(R.id.detalle_parte_confirm);
-
-        setUpStatusSpinner();
-        setUpTypeSpinner();
-
-
-        if(parteId==null) {
-            parte = new Parte();
-            stationId = getIntent().getIntExtra(DetalleParada.KEY_STATION_ID, 0);
-            parte.setStationId(stationId);
-            setUpLayoutForNewParte();
-        } else {
-            parte = dbHelper.parteById(parteId);
-            stationId = parte.getStationId();
-            setUpLayoutForUpdateParte();
-        }
     }
 
     private void setUpTypeSpinner() {
@@ -76,7 +81,6 @@ public class DetalleParte extends AppCompatActivity {
                 updateParte();
             }
         });
-
         deleteBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +98,6 @@ public class DetalleParte extends AppCompatActivity {
                 createNewParte();
             }
         });
-
         deleteBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +108,6 @@ public class DetalleParte extends AppCompatActivity {
     }
 
     private void createNewParte() {
-        parte.setStationId(stationId);
         switch (fillParteFromFields()) {
             case ERROR_NAME_EMPTY:
                 Toast.makeText(DetalleParte.this.getApplicationContext(), R.string.DetalleParte_creation_error_empty_name, Toast.LENGTH_SHORT).show();
