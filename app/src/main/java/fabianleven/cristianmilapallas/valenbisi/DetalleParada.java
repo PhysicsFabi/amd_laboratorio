@@ -34,7 +34,7 @@ public class DetalleParada extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_parada);
         parada = (Parada) getIntent().getSerializableExtra(ListaParadas.STATION_KEY);
-        db = new PartesDBHelper(getApplicationContext());
+        db = PartesDBHelper.getInstance(getApplicationContext());
         partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
 
         setTitle(parada.name);

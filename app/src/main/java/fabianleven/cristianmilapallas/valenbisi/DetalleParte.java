@@ -27,7 +27,7 @@ public class DetalleParte extends AppCompatActivity {
         setUpStatusSpinner();
         setUpTypeSpinner();
 
-        dbHelper = new PartesDBHelper(getApplicationContext());
+        dbHelper = PartesDBHelper.getInstance(getApplicationContext());
         String parteId = getIntent().getStringExtra(DetalleParada.KEY_PARTE_ID);
         if(parteId==null) {
             parte = new Parte();

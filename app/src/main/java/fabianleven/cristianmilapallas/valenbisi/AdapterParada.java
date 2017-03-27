@@ -34,7 +34,7 @@ class AdapterParada extends BaseAdapter {
 
     public AdapterParada(Context c) {
         context = c;
-        partesDataBase = new PartesDBHelper(c);
+        partesDataBase = PartesDBHelper.getInstance(c);
         Init();
     }
 
