@@ -59,7 +59,6 @@ public class DetalleParada extends AppCompatActivity {
         super.onResume();
         Cursor oldCursor = partesAdapter.swapCursor(db.partesByStation(parada));
         oldCursor.close();
-        partesAdapter.notifyDataSetChanged();
     }
 
     private void findAllViews() {
