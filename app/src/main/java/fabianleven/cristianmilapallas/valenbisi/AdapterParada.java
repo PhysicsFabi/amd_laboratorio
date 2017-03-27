@@ -24,7 +24,6 @@ import java.util.ArrayList;
 class AdapterParada extends BaseAdapter {
     private ArrayList<Parada> paradas;
     private final Context context;
-    private final PartesDBHelper partesDataBase;
 
     static class ViewHolder {
         TextView number;
@@ -34,11 +33,15 @@ class AdapterParada extends BaseAdapter {
 
     public AdapterParada(Context c) {
         context = c;
-        partesDataBase = PartesDBHelper.getInstance(c);
         Init();
     }
 
     private void Init() {
+        initParadasFromJSON(getParadasJSONFromFile());
+        updateParadasFromDatabase();
+    }
+
+    private JSONObject getParadasJSONFromFile() {
         InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbici);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -57,14 +60,13 @@ class AdapterParada extends BaseAdapter {
                 Log.e(ListaParadas.logTag, "Error while reading json file.", e);
             }
         }
-
         try {
-            initParadasFromJSON(new JSONObject(writer.toString()));
+            return new JSONObject(writer.toString());
         } catch (JSONException e) {
             Log.e(ListaParadas.logTag, "Error while reading json file.", e);
+            return new JSONObject();
         }
     }
-
 
     private void initParadasFromJSON(JSONObject object) {
        this.paradas = new ArrayList<>();
@@ -84,12 +86,26 @@ class AdapterParada extends BaseAdapter {
                         paradaJSONProps.optInt("free", -1),
                         paradaJSONProps.optInt("available", -1),
                         paradaJSONCoordinates.getDouble(0), //latitude
-                        paradaJSONCoordinates.getDouble(1) // longitude
+                        paradaJSONCoordinates.getDouble(1), // longitude
+                        0 // amount of partes set later
                 ));
             }
         } catch (JSONException e) {
             Log.e(ListaParadas.logTag, "Error while parsing json file.", e);
         }
+    }
+
+
+
+    /**
+     * Retrieves the amount of tickets for each station from the database and refreshes the data.
+     * Also calls notifyDataSetChanged(), hence the ListView this adapter belongs to will be refreshed.
+     */
+    public void updateParadasFromDatabase() {
+        for (Parada station: paradas) {
+            station.partes = PartesDBHelper.getInstance(context).partesByStation(station).getCount();
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -124,11 +140,10 @@ class AdapterParada extends BaseAdapter {
             holder = (ViewHolder) v.getTag();
         }
 
-
         Parada parada = this.paradas.get(position);
         holder.number.setText(Integer.toString(parada.number));
         holder.address.setText(parada.address);
-        holder.partes.setText(String.valueOf(partesDataBase.partesByStation(parada).getCount()));
+        holder.partes.setText(String.valueOf(parada.partes));
 
         return v;
     }
