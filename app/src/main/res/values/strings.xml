@@ -2,8 +2,11 @@
     <string name="placeholder">placeholder</string>
 
     <string name="app_name">Valenbisi</string>
-    <string name="number_label">Número:</string>
-    <string name="partes_label">Partes:</string>
+
+    <string name="ListaParada_fetchData_failure">No se pueden recoger los datos del servidor.</string>
+    <string name="ListaParada_fetchData_success">Lista actualizada.</string>
+    <string name="ListaParada_number_label">Número:</string>
+    <string name="ListaParada_partes_label">Partes:</string>
 
     <string name="DetalleParada_data">Datos</string>
     <string name="DetalleParada_incidents">Incidencias</string>

@@ -1,7 +1,5 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
-import android.content.Context;
-
 import java.io.Serializable;
 
 public class Parada implements Serializable {
@@ -54,8 +52,7 @@ public class Parada implements Serializable {
             int freeSlots,
             int availableBikes,
             double latitude,
-            double longitude,
-            int partes) {
+            double longitude) {
         this.name = name;
         this.number = number;
         this.address = address;
@@ -63,6 +60,6 @@ public class Parada implements Serializable {
         this.freeSlots = freeSlots;
         this.availableBikes = availableBikes;
         this.coordinates = new Coordinates(latitude, longitude);
-        this.partes = partes;
+        this.partes = 0;
     }
 }

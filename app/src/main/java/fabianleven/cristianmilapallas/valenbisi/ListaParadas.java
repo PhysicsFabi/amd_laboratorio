@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,14 +19,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static fabianleven.cristianmilapallas.valenbisi.ListaParadas.HTTPConnectorResult.*;
+
 public class ListaParadas extends AppCompatActivity {
 
+    @SuppressWarnings("WeakerAccess")
     public static final String LOG_TAG = "Valenbisi";
     public static final String STATION_KEY = "station";
     private static final String VALENBISI_URL = "http://mapas.valencia.es/lanzadera/opendata/Valenbisi/JSON";
@@ -38,18 +41,19 @@ public class ListaParadas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_paradas);
-        listView = (ListView) findViewById(R.id.station_list);
-        paradas = new ArrayList<>();
-        new HTTPConnector().execute(VALENBISI_URL);
+        initListView();
+        fetchDataFromServer();
     }
 
-    private void setParadas(ArrayList<Parada> paradas) {
-        this.paradas = paradas;
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(adapterParada!=null)
+            updateParadasFromDatabase();
     }
 
     private void initListView() {
-        adapterParada = new AdapterParada(getApplicationContext(), paradas);
-        listView.setAdapter(adapterParada);
+        listView = (ListView) findViewById(R.id.station_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,11 +66,31 @@ public class ListaParadas extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(adapterParada!=null)
-            updateParadasFromDatabase();
+    private void fetchDataFromServer() {
+        new HTTPConnector().execute(VALENBISI_URL);
+    }
+
+    private void setParadas(ArrayList<Parada> paradas) {
+        this.paradas = paradas;
+        initListViewAdapter();
+    }
+
+    private void initListViewAdapter() {
+        adapterParada = new AdapterParada(getApplicationContext(), paradas);
+        listView.setAdapter(adapterParada);
+    }
+
+    private void onDataRequestFinished(ArrayList<Parada> paradas, HTTPConnectorResult result) {
+        switch (result) {
+            case SUCCESS:
+                setParadas(paradas);
+                Toast.makeText(getApplicationContext(), R.string.ListaParada_fetchData_success, Toast.LENGTH_SHORT).show();
+                break;
+            case ERROR_CONNECTION_FAILURE:
+            case ERROR_PARSING_FAILURE:
+                Toast.makeText(getApplicationContext(), R.string.ListaParada_fetchData_failure, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     /**
@@ -82,11 +106,18 @@ public class ListaParadas extends AppCompatActivity {
         adapterParada.notifyDataSetChanged();
     }
 
+    enum HTTPConnectorResult {
+        SUCCESS,
+        ERROR_CONNECTION_FAILURE,
+        ERROR_PARSING_FAILURE
+    }
+
     public class HTTPConnector extends AsyncTask<String, Void, ArrayList<Parada>> {
 
+        HTTPConnectorResult result = SUCCESS;
+
         @Override
-        protected ArrayList doInBackground(String... params) {
-            ArrayList paradas = new ArrayList<Parada>();
+        protected ArrayList<Parada> doInBackground(String... params) {
             String url = params[0];
             Writer writer = new StringWriter();
             char[] buffer = new char[1024];
@@ -116,10 +147,10 @@ public class ListaParadas extends AppCompatActivity {
                     writer.write(buffer, 0, n);
                 }
                 in.close();
-            } catch (UnsupportedEncodingException e) {
-                Log.e(ListaParadas.LOG_TAG, "Error while connecting to Valenbisi service.", e);
             } catch (IOException e) {
                 Log.e(ListaParadas.LOG_TAG, "Error while connecting to Valenbisi service.", e);
+                result = ERROR_CONNECTION_FAILURE;
+                return null;
             }
 
             JSONObject json;
@@ -127,16 +158,13 @@ public class ListaParadas extends AppCompatActivity {
                 json = new JSONObject(writer.toString());
             } catch (JSONException e) {
                 Log.e(ListaParadas.LOG_TAG, "Error while parsing received JSON.", e);
-                json = new JSONObject();
+                result = ERROR_CONNECTION_FAILURE;
+                return null;
             }
 
-            return paradasFromJSON(json);
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Parada> paradas) {
-            setParadas(paradas);
-            initListView();
+            ArrayList<Parada> paradas = paradasFromJSON(json);
+            result = SUCCESS;
+            return paradas;
         }
 
         private ArrayList<Parada> paradasFromJSON(JSONObject object) {
@@ -157,14 +185,20 @@ public class ListaParadas extends AppCompatActivity {
                             paradaJSONProps.optInt("free", -1),
                             paradaJSONProps.optInt("available", -1),
                             paradaJSONCoordinates.getDouble(0), //latitude
-                            paradaJSONCoordinates.getDouble(1), // longitude
-                            0 // amount of partes set later
+                            paradaJSONCoordinates.getDouble(1) // longitude
                     ));
                 }
             } catch (JSONException e) {
                 Log.e(ListaParadas.LOG_TAG, "Error while parsing json file.", e);
+                result = ERROR_PARSING_FAILURE;
+                return null;
             }
             return paradas;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Parada> paradas) {
+            onDataRequestFinished(paradas, result);
         }
     }
 }

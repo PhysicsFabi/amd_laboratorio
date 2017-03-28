@@ -2,27 +2,15 @@ package fabianleven.cristianmilapallas.valenbisi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 
 class AdapterParada extends BaseAdapter {
-    private ArrayList<Parada> paradas;
+    private final ArrayList<Parada> paradas;
     private final Context context;
 
     static class ViewHolder {
