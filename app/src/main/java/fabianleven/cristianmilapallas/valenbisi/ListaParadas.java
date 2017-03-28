@@ -50,8 +50,9 @@ public class ListaParadas extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        updateParadasFromDatabase();
         if(adapterParada!=null)
-            updateParadasFromDatabase();
+            adapterParada.notifyDataSetChanged();
     }
 
     private void initViews() {
@@ -83,6 +84,7 @@ public class ListaParadas extends AppCompatActivity {
 
     private void setParadas(ArrayList<Parada> paradas) {
         this.paradas = paradas;
+        updateParadasFromDatabase();
         initListViewAdapter();
     }
 
@@ -110,12 +112,13 @@ public class ListaParadas extends AppCompatActivity {
      * Also calls notifyDataSetChanged(), hence the ListView this adapter belongs to will be refreshed.
      */
     private void updateParadasFromDatabase() {
+        if(paradas==null)
+            return;
         for (Parada station: paradas) {
             Cursor c = PartesDBHelper.getInstance(getApplicationContext()).partesByStation(station);
             station.partes = c.getCount();
             c.close();
         }
-        adapterParada.notifyDataSetChanged();
     }
 
     enum HTTPConnectorResult {
