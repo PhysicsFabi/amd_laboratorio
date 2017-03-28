@@ -1,6 +1,7 @@
 package fabianleven.cristianmilapallas.valenbisi;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class ListaParadas extends AppCompatActivity {
     public static final String LOG_TAG = "Valenbisi";
     public static final String STATION_KEY = "station";
     private static final String VALENBISI_URL = "http://mapas.valencia.es/lanzadera/opendata/Valenbisi/JSON";
+
+    private ArrayList<Parada> paradas;
     private AdapterParada adapterParada;
     private ListView listView;
 
@@ -36,10 +39,15 @@ public class ListaParadas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_paradas);
         listView = (ListView) findViewById(R.id.station_list);
+        paradas = new ArrayList<>();
         new HTTPConnector().execute(VALENBISI_URL);
     }
 
-    private void initListView(ArrayList<Parada> paradas) {
+    private void setParadas(ArrayList<Parada> paradas) {
+        this.paradas = paradas;
+    }
+
+    private void initListView() {
         adapterParada = new AdapterParada(getApplicationContext(), paradas);
         listView.setAdapter(adapterParada);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +66,20 @@ public class ListaParadas extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         if(adapterParada!=null)
-            adapterParada.updateParadasFromDatabase();
+            updateParadasFromDatabase();
+    }
+
+    /**
+     * Retrieves the amount of tickets for each station from the database and refreshes the data.
+     * Also calls notifyDataSetChanged(), hence the ListView this adapter belongs to will be refreshed.
+     */
+    private void updateParadasFromDatabase() {
+        for (Parada station: paradas) {
+            Cursor c = PartesDBHelper.getInstance(getApplicationContext()).partesByStation(station);
+            station.partes = c.getCount();
+            c.close();
+        }
+        adapterParada.notifyDataSetChanged();
     }
 
     public class HTTPConnector extends AsyncTask<String, Void, ArrayList<Parada>> {
@@ -113,8 +134,9 @@ public class ListaParadas extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Parada> arrayList) {
-            initListView(arrayList);
+        protected void onPostExecute(ArrayList<Parada> paradas) {
+            setParadas(paradas);
+            initListView();
         }
 
         private ArrayList<Parada> paradasFromJSON(JSONObject object) {

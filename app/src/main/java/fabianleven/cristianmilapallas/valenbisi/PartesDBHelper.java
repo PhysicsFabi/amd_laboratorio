@@ -143,10 +143,10 @@ class PartesDBHelper extends SQLiteOpenHelper {
     public Parte parteById(String parteId) {
         String selection = COLUMN_NAME_PRIMARY_KEY + "='" + parteId + "'";
         Cursor c = getReadableDatabase().query(TABLE_NAME, ALL_COLUMN_NAMES, selection, null, null, null, null);
-        if(!c.moveToFirst())
-            return null;
-        else {
-            return parteFromCursor(c);
-        }
+        Parte parte = null;
+        if(c.moveToFirst())
+            parte = parteFromCursor(c);
+        c.close();
+        return parte;
     }
 }

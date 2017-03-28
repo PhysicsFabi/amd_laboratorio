@@ -34,18 +34,6 @@ class AdapterParada extends BaseAdapter {
     public AdapterParada(Context c, ArrayList<Parada> paradas) {
         context = c;
         this.paradas = paradas;
-        updateParadasFromDatabase();
-    }
-
-    /**
-     * Retrieves the amount of tickets for each station from the database and refreshes the data.
-     * Also calls notifyDataSetChanged(), hence the ListView this adapter belongs to will be refreshed.
-     */
-    public void updateParadasFromDatabase() {
-        for (Parada station: paradas) {
-            station.partes = PartesDBHelper.getInstance(context).partesByStation(station).getCount();
-        }
-        notifyDataSetChanged();
     }
 
     @Override
