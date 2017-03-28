@@ -57,7 +57,8 @@ public class ListaParadas extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        adapterParada.updateParadasFromDatabase();
+        if(adapterParada!=null)
+            adapterParada.updateParadasFromDatabase();
     }
 
     public class HTTPConnector extends AsyncTask<String, Void, ArrayList<Parada>> {
