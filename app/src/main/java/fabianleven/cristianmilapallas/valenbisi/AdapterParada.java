@@ -31,71 +31,11 @@ class AdapterParada extends BaseAdapter {
         TextView partes;
     }
 
-    public AdapterParada(Context c) {
+    public AdapterParada(Context c, ArrayList<Parada> paradas) {
         context = c;
-        Init();
-    }
-
-    private void Init() {
-        initParadasFromJSON(getParadasJSONFromFile());
+        this.paradas = paradas;
         updateParadasFromDatabase();
     }
-
-    private JSONObject getParadasJSONFromFile() {
-        InputStream is = context.getResources().openRawResource(R.raw.paradasvalenbici);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-        } catch (IOException e) {
-            Log.e(ListaParadas.logTag, "Error while reading json file.", e);
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                Log.e(ListaParadas.logTag, "Error while reading json file.", e);
-            }
-        }
-        try {
-            return new JSONObject(writer.toString());
-        } catch (JSONException e) {
-            Log.e(ListaParadas.logTag, "Error while reading json file.", e);
-            return new JSONObject();
-        }
-    }
-
-    private void initParadasFromJSON(JSONObject object) {
-       this.paradas = new ArrayList<>();
-        try {
-            JSONArray paradasJSON = object.getJSONArray("features");
-
-            for(int i = 0; i< paradasJSON.length(); i++) {
-                JSONObject paradaJSON = paradasJSON.getJSONObject(i);
-                JSONObject paradaJSONProps = paradaJSON.getJSONObject("properties");
-                JSONObject paradaJSONGeometry = paradaJSON.getJSONObject("geometry");
-                JSONArray paradaJSONCoordinates = paradaJSONGeometry.getJSONArray("coordinates");
-                this.paradas.add(new Parada(
-                        paradaJSONProps.getString("name"),
-                        paradaJSONProps.getInt("number"),
-                        paradaJSONProps.getString("address"),
-                        paradaJSONProps.optInt("total", -1),
-                        paradaJSONProps.optInt("free", -1),
-                        paradaJSONProps.optInt("available", -1),
-                        paradaJSONCoordinates.getDouble(0), //latitude
-                        paradaJSONCoordinates.getDouble(1), // longitude
-                        0 // amount of partes set later
-                ));
-            }
-        } catch (JSONException e) {
-            Log.e(ListaParadas.logTag, "Error while parsing json file.", e);
-        }
-    }
-
-
 
     /**
      * Retrieves the amount of tickets for each station from the database and refreshes the data.
