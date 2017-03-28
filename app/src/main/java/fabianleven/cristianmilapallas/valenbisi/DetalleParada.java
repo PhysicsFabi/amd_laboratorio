@@ -34,45 +34,23 @@ public class DetalleParada extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_parada);
         parada = (Parada) getIntent().getSerializableExtra(ListaParadas.STATION_KEY);
+        db = PartesDBHelper.getInstance(getApplicationContext());
+        partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
+
         setTitle(parada.name);
         findAllViews();
-
         setFields();
-
-        db = new PartesDBHelper(getApplicationContext());
-        partesAdapter = new AdapterParte(getApplicationContext(), db.partesByStation(parada));
-        incidentsLV.setAdapter(partesAdapter);
-
-        incidentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = partesAdapter.getCursor();
-                cursor.moveToPosition(position);
-                Intent in = new Intent(getApplicationContext(), DetalleParte.class);
-                in.putExtra(KEY_PARTE_ID, PartesDBHelper.parteFromCursor(cursor).getId());
-                startActivity(in);
-            }
-        });
-
+        setUpParteList();
         openMapBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri;
-                gmmIntentUri = Uri.parse("geo:0,0?q="+parada.coordinates.latitude+","+parada.coordinates.longitude+"("+parada.address+")");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                if (mapIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(mapIntent);
-                }
+                openMap();
             }
         });
-
         addIncidentBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(getApplicationContext(), DetalleParte.class);
-                in.putExtra(KEY_STATION_ID, parada.number);
-                startActivity(in);
+                addParte();
             }
         });
     }
@@ -81,7 +59,6 @@ public class DetalleParada extends AppCompatActivity {
         super.onResume();
         Cursor oldCursor = partesAdapter.swapCursor(db.partesByStation(parada));
         oldCursor.close();
-        partesAdapter.notifyDataSetChanged();
     }
 
     private void findAllViews() {
@@ -107,6 +84,36 @@ public class DetalleParada extends AppCompatActivity {
         freeSlotsTV.setText(freeSlots_string);
         String coordinates_as_string = parada.coordinates.latitude + ", " + parada.coordinates.longitude;
         coordinatesTV.setText(coordinates_as_string);
+    }
+
+    private void setUpParteList() {
+        incidentsLV.setAdapter(partesAdapter);
+        incidentsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = partesAdapter.getCursor();
+                cursor.moveToPosition(position);
+                Intent in = new Intent(getApplicationContext(), DetalleParte.class);
+                in.putExtra(KEY_PARTE_ID, PartesDBHelper.parteFromCursor(cursor).getId());
+                startActivity(in);
+            }
+        });
+    }
+
+    private void addParte() {
+        Intent in = new Intent(getApplicationContext(), DetalleParte.class);
+        in.putExtra(KEY_STATION_ID, parada.number);
+        startActivity(in);
+    }
+
+    private void openMap() {
+        Uri gmmIntentUri;
+        gmmIntentUri = Uri.parse("geo:0,0?q="+parada.coordinates.latitude+","+parada.coordinates.longitude+"("+parada.address+")");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 
 

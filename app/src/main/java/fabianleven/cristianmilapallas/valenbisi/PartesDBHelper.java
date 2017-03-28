@@ -11,6 +11,8 @@ class PartesDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "valenbisi";
     private static final int DATABASE_VERSION = 1;
 
+    private static PartesDBHelper instance;
+
     private static final String TABLE_NAME = "parte";
     // note: in order for the class CursorAdapter to work properly the column of the Primary Key has to be named "_id"
     private static final String COLUMN_NAME_PRIMARY_KEY = "_id";
@@ -28,7 +30,15 @@ class PartesDBHelper extends SQLiteOpenHelper {
             COLUMN_NAME_STATUS,
             COLUMN_NAME_TYPE};
 
-    public PartesDBHelper(Context context) {
+    public static PartesDBHelper getInstance(Context ctx) {
+        if (instance == null) {
+            // use the application context to avoid leaking the activities context
+            instance = new PartesDBHelper(ctx.getApplicationContext());
+        }
+        return instance;
+    }
+
+    private PartesDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -52,7 +62,7 @@ class PartesDBHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Creates key-value-pairs for a ticket. The pirmary key column is NOT included.
+     * Creates key-value-pairs for a ticket. The primary key column is NOT included.
      *
      * @param parte the ticket from which the values are taken
      * @return column name - column content pairs for a ticket
@@ -99,7 +109,7 @@ class PartesDBHelper extends SQLiteOpenHelper {
     /**
      * Updates a ticket in the database.
      *
-     * @param parte the ticket t be updated
+     * @param parte the ticket to be updated
      * @return true - success, false - failure
      */
     public boolean updateParte(Parte parte) {

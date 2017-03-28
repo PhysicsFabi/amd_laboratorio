@@ -35,6 +35,6 @@ public class ListaParadas extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        adapterParada.notifyDataSetChanged();
+        adapterParada.updateParadasFromDatabase();
     }
 }
