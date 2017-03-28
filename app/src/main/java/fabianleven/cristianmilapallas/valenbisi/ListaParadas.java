@@ -3,6 +3,7 @@ package fabianleven.cristianmilapallas.valenbisi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,13 +36,14 @@ public class ListaParadas extends AppCompatActivity {
 
     private ArrayList<Parada> paradas;
     private AdapterParada adapterParada;
-    private ListView listView;
+    private ListView paradasLV;
+    private SwipeRefreshLayout paradasRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_paradas);
-        initListView();
+        initViews();
         fetchDataFromServer();
     }
 
@@ -52,9 +54,9 @@ public class ListaParadas extends AppCompatActivity {
             updateParadasFromDatabase();
     }
 
-    private void initListView() {
-        listView = (ListView) findViewById(R.id.station_list);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void initViews() {
+        paradasLV = (ListView) findViewById(R.id.station_list);
+        paradasLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent in = new Intent(getApplicationContext(), DetalleParada.class);
@@ -64,9 +66,18 @@ public class ListaParadas extends AppCompatActivity {
                 startActivity(in);
             }
         });
+
+        paradasRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        paradasRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchDataFromServer();
+            }
+        });
     }
 
     private void fetchDataFromServer() {
+        paradasRefreshLayout.setRefreshing(true);
         new HTTPConnector().execute(VALENBISI_URL);
     }
 
@@ -77,7 +88,7 @@ public class ListaParadas extends AppCompatActivity {
 
     private void initListViewAdapter() {
         adapterParada = new AdapterParada(getApplicationContext(), paradas);
-        listView.setAdapter(adapterParada);
+        paradasLV.setAdapter(adapterParada);
     }
 
     private void onDataRequestFinished(ArrayList<Parada> paradas, HTTPConnectorResult result) {
@@ -91,6 +102,7 @@ public class ListaParadas extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.ListaParada_fetchData_failure, Toast.LENGTH_SHORT).show();
                 break;
         }
+        paradasRefreshLayout.setRefreshing(false);
     }
 
     /**
